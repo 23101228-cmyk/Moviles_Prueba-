@@ -24,68 +24,91 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun setupClickListeners() {
 
-        // Register button
+        // Botón de Registro
         binding.btnRegistrar.setOnClickListener {
             if (validateFields()) {
-                // TODO: conectar con tu lógica de backend / Firebase / API
-                val usuario  = binding.etUsuario.text.toString().trim()
+                val usuario = binding.etUsuario.text.toString().trim()
 
-                Toast.makeText(this, "Registrando a $usuario...", Toast.LENGTH_SHORT).show()
-                // Navega a la siguiente pantalla o llama a tu ViewModel aquí
+                // 1. Cambiamos el texto para confirmar que el proceso fue exitoso
+                Toast.makeText(this, "¡Registro exitoso para $usuario!", Toast.LENGTH_SHORT).show()
+
+                // 2. CORRECCIÓN: Agregamos la redirección automática al Login (HU-01)
+                val intent = android.content.Intent(this, com.soltis.mya.login.LoginActivity::class.java)
+                startActivity(intent)
+
+                // 3. Destruimos esta actividad para evitar que regrese con el botón de "atrás" del teléfono
+                finish()
             }
         }
 
-        // Link "Inicia sesión"
+        // Enlace "¿Ya tienes cuenta? Inicia sesión"
         binding.tvIniciarSesion.setOnClickListener {
-            // Navegar a LoginActivity
+            // Navegar a LoginActivity si el usuario decide regresar manualmente
             val intent = android.content.Intent(this, com.soltis.mya.login.LoginActivity::class.java)
             startActivity(intent)
             finish()
         }
     }
 
-    // ── Validaciones básicas ──────────────────────────────────────────────────
+    // ── Validaciones según Criterios de Aceptación (HU-01) ──────────────────────
 
     private fun validateFields(): Boolean {
-        var isValid = true
+        // Usamos variables individuales para evitar el cortocircuito lógico del '&&'
+        // De esta forma, el formulario mostrará TODOS los errores en pantalla al mismo tiempo.
+        val isNombreValid = validateNotEmpty(binding.etNombreCompleto, binding.tilNombreCompleto, "Ingresa tu nombre completo")
+        val isUsuarioValid = validateNotEmpty(binding.etUsuario, binding.tilUsuario, "Ingresa un nombre de usuario")
 
-        isValid = validateNotEmpty(binding.etNombreCompleto, binding.tilNombreCompleto,
-            "Ingresa tu nombre completo") && isValid
-
+        // Validación del Correo Electrónico (Placeholder exacto y formato)
         val correo = binding.etCorreo.text.toString().trim()
-        if (correo.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(correo).matches()) {
-            binding.tilCorreo.error = "Ingresa un correo válido"
-            isValid = false
+        val isCorreoValid = if (correo.isEmpty()) {
+            binding.tilCorreo.error = "Ingresa tu correo electrónico"
+            false
+        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(correo).matches()) {
+            binding.tilCorreo.error = "Formato de correo inválido (usuario@dominio.com)"
+            false
         } else {
             binding.tilCorreo.error = null
+            true
         }
 
-        isValid = validateNotEmpty(binding.etUsuario, binding.tilUsuario,
-            "Ingresa un nombre de usuario") && isValid
-
-        val pass    = binding.etContrasena.text.toString()
+        // Validación de Contraseñas
+        val pass = binding.etContrasena.text.toString()
         val confirm = binding.etConfirmarContrasena.text.toString()
+        var isPasswordValid = true
 
-        if (pass.length < 6) {
-            binding.tilContrasena.error = "Mínimo 6 caracteres"
-            isValid = false
+        // AJUSTE: Exigir longitud mínima de 8 caracteres según HU-01
+        if (pass.isEmpty()) {
+            binding.tilContrasena.error = "Crea una contraseña segura"
+            isPasswordValid = false
+        } else if (pass.length < 8) {
+            binding.tilContrasena.error = "La contraseña debe tener al menos 8 caracteres"
+            isPasswordValid = false
         } else {
             binding.tilContrasena.error = null
         }
 
-        if (pass != confirm) {
+        // Validación de Confirmación de Contraseña
+        val isConfirmValid = if (confirm.isEmpty()) {
+            binding.tilConfirmarContrasena.error = "Confirma tu contraseña"
+            false
+        } else if (pass != confirm) {
             binding.tilConfirmarContrasena.error = "Las contraseñas no coinciden"
-            isValid = false
+            false
         } else {
             binding.tilConfirmarContrasena.error = null
+            true
         }
 
-        if (!binding.cbTerminos.isChecked) {
-            Toast.makeText(this, "Debes aceptar los Términos y Condiciones", Toast.LENGTH_SHORT).show()
-            isValid = false
+        // Validación del Checkbox interactivo obligatorio
+        val isCheckboxValid = if (!binding.cbTerminos.isChecked) {
+            Toast.makeText(this, "Debes aceptar los Términos y Condiciones y la Política de Privacidad", Toast.LENGTH_LONG).show()
+            false
+        } else {
+            true
         }
 
-        return isValid
+        // Retorna verdadero únicamente si todas las secciones pasaron de manera exitosa
+        return isNombreValid && isCorreoValid && isUsuarioValid && isPasswordValid && isConfirmValid && isCheckboxValid
     }
 
     private fun validateNotEmpty(
@@ -109,14 +132,12 @@ class RegisterActivity : AppCompatActivity() {
 
         // "Términos y Condiciones"
         binding.tvLinkTerminos.setOnClickListener {
-            // TODO: abrir WebView o Activity de términos
-            Toast.makeText(this, "Términos y Condiciones", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Abriendo Términos y Condiciones...", Toast.LENGTH_SHORT).show()
         }
 
         // "Política de Privacidad"
         binding.tvLinkPrivacidad.setOnClickListener {
-            // TODO: abrir WebView o Activity de privacidad
-            Toast.makeText(this, "Política de Privacidad", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Abriendo Política de Privacidad...", Toast.LENGTH_SHORT).show()
         }
     }
 }
