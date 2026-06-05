@@ -3,52 +3,170 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F9FA">
+    android:background="#FFFFFF"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="20dp"
-        android:gravity="center_horizontal">
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            app:cardCornerRadius="50dp"
-            app:strokeWidth="2dp"
-            app:strokeColor="#1E88E5"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="16dp">
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_person"
-                android:padding="20dp"
-                app:tint="#1E88E5"/>
-        </com.google.android.material.card.MaterialCardView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Usuario P2P"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:textColor="#1A1A1A"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="usuario@ejemplo.com"
-            android:textColor="#757575"
-            android:layout_marginBottom="32dp"/>
+        android:paddingBottom="36dp">
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="#263238"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="4dp"
+            app:strokeWidth="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="20dp">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:backgroundTint="#FFFFFF"
+                    app:cardCornerRadius="36dp"
+                    app:cardElevation="0dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="16dp"
+                        android:src="@drawable/ic_person"
+                        app:tint="#F5A623" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvProfileName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Usuario P2P"
+                        android:textColor="#FFFFFF"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvProfileEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="usuario@ejemplo.com"
+                        android:textColor="#D6DEE2"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tvProfileStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="#1B5E20"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="4dp"
+                        android:text="Perfil verificado"
+                        android:textColor="#FFFFFF"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="Datos personales"
+            android:textColor="#1A1A1A"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="2dp"
-            app:strokeWidth="0dp">
+            app:strokeColor="#EEEEEE"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre completo"
+                    android:textColor="#757575"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tvFullName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Usuario de prueba"
+                    android:textColor="#1A1A1A"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="14dp"
+                    android:background="#F0F0F0" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Celular"
+                    android:textColor="#757575"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tvPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="+51 999 888 777"
+                    android:textColor="#1A1A1A"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="Datos de pago"
+            android:textColor="#1A1A1A"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:strokeColor="#EEEEEE"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -56,40 +174,176 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/rowYape"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:text="Configuración de Cuenta"
                     android:background="?attr/selectableItemBackground"
-                    android:drawableStart="@drawable/ic_person"
-                    android:drawablePadding="16dp"
-                    app:drawableTint="#757575"/>
+                    android:clickable="true"
+                    android:drawableStart="@drawable/ic_payment_yape"
+                    android:drawableEnd="@drawable/ic_chevron_right"
+                    android:drawablePadding="14dp"
+                    android:focusable="true"
+                    android:padding="16dp"
+                    android:text="Yape: +51 999 888 777"
+                    android:textColor="#1A1A1A"
+                    android:textSize="15sp"
+                    app:drawableTint="#7B1FA2" />
 
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#F0F0F0"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#F0F0F0" />
 
                 <TextView
+                    android:id="@+id/rowPlin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:text="Seguridad"
                     android:background="?attr/selectableItemBackground"
-                    android:drawableStart="@drawable/ic_lock"
-                    android:drawablePadding="16dp"
-                    app:drawableTint="#757575"/>
+                    android:clickable="true"
+                    android:drawableStart="@drawable/ic_payment_plin"
+                    android:drawableEnd="@drawable/ic_chevron_right"
+                    android:drawablePadding="14dp"
+                    android:focusable="true"
+                    android:padding="16dp"
+                    android:text="Plin: +51 999 888 777"
+                    android:textColor="#1A1A1A"
+                    android:textSize="15sp"
+                    app:drawableTint="#00A8A8" />
 
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#F0F0F0"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#F0F0F0" />
 
                 <TextView
+                    android:id="@+id/rowBank"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:text="Cerrar Sesión"
-                    android:textColor="#E74C3C"
                     android:background="?attr/selectableItemBackground"
-                    android:textStyle="bold"/>
+                    android:clickable="true"
+                    android:drawableStart="@drawable/ic_bank_transfer"
+                    android:drawableEnd="@drawable/ic_chevron_right"
+                    android:drawablePadding="14dp"
+                    android:focusable="true"
+                    android:padding="16dp"
+                    android:text="Banco: BCP"
+                    android:textColor="#1A1A1A"
+                    android:textSize="15sp"
+                    app:drawableTint="#F5A623" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#F0F0F0" />
+
+                <TextView
+                    android:id="@+id/rowCci"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:drawableStart="@drawable/ic_transfer"
+                    android:drawableEnd="@drawable/ic_chevron_right"
+                    android:drawablePadding="14dp"
+                    android:focusable="true"
+                    android:padding="16dp"
+                    android:text="CCI: 00219100123456789012"
+                    android:textColor="#1A1A1A"
+                    android:textSize="15sp"
+                    app:drawableTint="#2980B9" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="Validaciones"
+            android:textColor="#1A1A1A"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardValidation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="#E8F5E9"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="1dp"
+            app:strokeColor="#C8E6C9"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_info"
+                    app:tint="#2E7D32" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvValidationTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Datos de pago validados"
+                        android:textColor="#1B5E20"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvValidationDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="Yape, Plin, banco y CCI listos para operar."
+                        android:textColor="#2E7D32"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSaveProfile"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="24dp"
+            android:text="Guardar perfil"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            app:backgroundTint="#F5A623"
+            app:cornerRadius="12dp"
+            app:icon="@drawable/ic_person"
+            app:iconGravity="textStart"
+            app:iconTint="#FFFFFF" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogout"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="12dp"
+            android:text="Cerrar sesión simulado"
+            android:textColor="#C62828"
+            android:textStyle="bold"
+            app:cornerRadius="12dp"
+            app:icon="@drawable/ic_lock"
+            app:iconGravity="textStart"
+            app:iconTint="#C62828"
+            app:strokeColor="#C62828" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
