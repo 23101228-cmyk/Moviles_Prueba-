@@ -3,7 +3,6 @@ package com.soltis.mya.ofertas
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.soltis.mya.MyOffer
 
 class OfferViewModel : ViewModel() {
     private val _myOffers = MutableLiveData<MutableList<MyOffer>>(mutableListOf())

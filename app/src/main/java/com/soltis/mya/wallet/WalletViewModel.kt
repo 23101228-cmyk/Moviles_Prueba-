@@ -1,8 +1,9 @@
-package com.soltis.mya
+package com.soltis.mya.wallet
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.soltis.mya.R
 
 class WalletViewModel : ViewModel() {
 

@@ -1,4 +1,4 @@
-package com.soltis.mya
+package com.soltis.mya.wallet
 
 import android.graphics.Color
 import android.os.Bundle

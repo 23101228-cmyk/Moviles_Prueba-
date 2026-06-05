@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/nav_inicio"
-        android:name="com.soltis.mya.InicioFragment"
+        android:name="com.soltis.mya.inicio.InicioFragment"
         android:label="Inicio" />
 
     <fragment
         android:id="@+id/nav_mercado"
-        android:name="com.soltis.mya.MercadoFragment"
+        android:name="com.soltis.mya.mercado.MercadoFragment"
         android:label="Mercado" />
 
     <fragment
         android:id="@+id/nav_ofertas"
-        android:name="com.soltis.mya.OfertasFragment"
+        android:name="com.soltis.mya.ofertas.OfertasFragment"
         android:label="Ofertas">
         <action
             android:id="@+id/action_nav_ofertas_to_publishOfferFragment"
@@ -32,18 +32,18 @@
 
     <fragment
         android:id="@+id/nav_wallet"
-        android:name="com.soltis.mya.WalletFragment"
+        android:name="com.soltis.mya.wallet.WalletFragment"
         android:label="Wallet"
         tools:layout="@layout/fragment_wallet" />
 
     <fragment
         android:id="@+id/nav_perfil"
-        android:name="com.soltis.mya.PerfilFragment"
+        android:name="com.soltis.mya.perfil.PerfilFragment"
         android:label="Perfil" />
 
     <fragment
         android:id="@+id/nav_deposit"
-        android:name="com.soltis.mya.DepositFragment"
+        android:name="com.soltis.mya.wallet.DepositFragment"
         android:label="Depositar"
         tools:layout="@layout/fragment_deposit">
         <action
@@ -53,7 +53,7 @@
 
     <fragment
         android:id="@+id/nav_movements"
-        android:name="com.soltis.mya.MovementsFragment"
+        android:name="com.soltis.mya.wallet.MovementsFragment"
         android:label="Movimientos"
         tools:layout="@layout/fragment_movements" />
 

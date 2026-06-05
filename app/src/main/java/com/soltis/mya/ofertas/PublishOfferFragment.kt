@@ -14,8 +14,7 @@ import com.soltis.mya.R
 import com.soltis.mya.databinding.FragmentPublishOfferBinding
 
 import androidx.fragment.app.activityViewModels
-import com.soltis.mya.MyOffer
-import com.soltis.mya.WalletViewModel
+import com.soltis.mya.wallet.WalletViewModel
 
 class PublishOfferFragment : Fragment() {
 

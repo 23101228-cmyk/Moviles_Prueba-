@@ -1,4 +1,4 @@
-package com.soltis.mya
+package com.soltis.mya.wallet
 
 import android.os.Bundle
 import android.text.Editable
@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.soltis.mya.R
 import com.soltis.mya.databinding.FragmentDepositBinding
 
 class DepositFragment : Fragment() {
