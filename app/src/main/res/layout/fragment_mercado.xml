@@ -11,12 +11,13 @@
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
         app:elevation="0dp">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:gravity="center_vertical"
             android:paddingHorizontal="20dp"
-            android:text="Mercado"
+            android:text="Mercado P2P"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="#1A1A1A" />
@@ -29,14 +30,203 @@
         app:tabIndicatorColor="#1E88E5"
         app:tabSelectedTextColor="#1E88E5"
         app:tabTextColor="#757575">
+
         <com.google.android.material.tabs.TabItem android:text="Comprar" />
         <com.google.android.material.tabs.TabItem android:text="Vender" />
     </com.google.android.material.tabs.TabLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMercado"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="8dp"/>
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:layout_weight="1">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Divisa"
+                    android:textStyle="bold"
+                    android:textColor="#1A1A1A" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:singleSelection="true">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipTodas"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="Todas" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipPen"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="PEN" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipUsd"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="USD" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipEur"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="EUR" />
+                </com.google.android.material.chip.ChipGroup>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Metodo de pago"
+                    android:textStyle="bold"
+                    android:textColor="#1A1A1A" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none">
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:singleSelection="true">
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipMetodoTodos"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:text="Todos" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipYape"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Yape" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipPlin"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Plin" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipTransferencia"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Transferencia" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipWallet"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Wallet" />
+                    </com.google.android.material.chip.ChipGroup>
+                </HorizontalScrollView>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:boxBackgroundMode="outline"
+                    app:hintEnabled="true"
+                    android:hint="Monto a operar">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etMontoFiltro"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:hint="Ej. 100" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Switch
+                    android:id="@+id/switchReputation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Solo reputacion mayor o igual a 95%" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnAplicarFiltros"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Aplicar"
+                        android:textAllCaps="false"
+                        app:cornerRadius="8dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnLimpiarFiltros"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:text="Limpiar"
+                        android:textAllCaps="false"
+                        app:cornerRadius="8dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvResultCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:paddingBottom="6dp"
+                android:text="0 ofertas disponibles"
+                android:textColor="#666666" />
+
+            <TextView
+                android:id="@+id/tvEmpty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="24dp"
+                android:text="No hay ofertas con los filtros seleccionados"
+                android:textColor="#757575"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMercado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:paddingHorizontal="4dp" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

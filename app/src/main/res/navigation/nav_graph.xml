@@ -13,7 +13,17 @@
     <fragment
         android:id="@+id/nav_mercado"
         android:name="com.soltis.mya.mercado.MercadoFragment"
-        android:label="Mercado" />
+        android:label="Mercado">
+        <action
+            android:id="@+id/action_nav_mercado_to_offer_detail"
+            app:destination="@id/nav_offer_detail" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_offer_detail"
+        android:name="com.soltis.mya.mercado.OfferDetailFragment"
+        android:label="Detalle de oferta"
+        tools:layout="@layout/fragment_offer_detail" />
 
     <fragment
         android:id="@+id/nav_ofertas"
