@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/nav_wallet">
+
+    <fragment
+        android:id="@+id/nav_inicio"
+        android:name="com.soltis.mya.InicioFragment"
+        android:label="Inicio" />
+
+    <fragment
+        android:id="@+id/nav_mercado"
+        android:name="com.soltis.mya.MercadoFragment"
+        android:label="Mercado" />
+
+    <fragment
+        android:id="@+id/nav_ofertas"
+        android:name="com.soltis.mya.OfertasFragment"
+        android:label="Ofertas">
+        <action
+            android:id="@+id/action_nav_ofertas_to_publishOfferFragment"
+            app:destination="@id/nav_publish_offer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_publish_offer"
+        android:name="com.soltis.mya.ofertas.PublishOfferFragment"
+        android:label="Publicar Oferta"
+        tools:layout="@layout/fragment_publish_offer" />
+
+    <fragment
+        android:id="@+id/nav_wallet"
+        android:name="com.soltis.mya.WalletFragment"
+        android:label="Wallet"
+        tools:layout="@layout/fragment_wallet" />
+
+    <fragment
+        android:id="@+id/nav_perfil"
+        android:name="com.soltis.mya.PerfilFragment"
+        android:label="Perfil" />
+
+    <fragment
+        android:id="@+id/nav_deposit"
+        android:name="com.soltis.mya.DepositFragment"
+        android:label="Depositar"
+        tools:layout="@layout/fragment_deposit">
+        <action
+            android:id="@+id/action_nav_deposit_to_nav_movements"
+            app:destination="@id/nav_movements" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_movements"
+        android:name="com.soltis.mya.MovementsFragment"
+        android:label="Movimientos"
+        tools:layout="@layout/fragment_movements" />
+
+</navigation>

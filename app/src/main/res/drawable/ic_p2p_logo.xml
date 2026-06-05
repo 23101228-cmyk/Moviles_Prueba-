@@ -1,0 +1,14 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <!-- Anillo Exterior Suavizado -->
+    <path
+        android:fillColor="#F5A623"
+        android:pathData="M24,4C13,4 4,13 4,24s9,20 20,20s20,-9 20,-20S35,4 24,4zM24,40c-8.8,0 -16,-7.2 -16,-16S15.2,8 24,8s16,7.2 16,16S32.8,40 24,40z" />
+    <!-- Símbolo Central de Intercambio -->
+    <path
+        android:fillColor="#F5A623"
+        android:pathData="M24,16c-3.3,0 -6.2,2 -7.4,5h3.4l-5,5l-5,-5h3.3c1.5,-4.7 5.9,-8 10.7,-8c2,0 3.9,0.5 5.5,1.5l-1.5,1.5c-1.2,-0.6 -2.6,-1 -4,-1zM24,32c3.3,0 6.2,-2 7.4,-5h-3.4l5,-5l5,5h-3.3c-1.5,4.7 -5.9,8 -10.7,8c-2,0 -3.9,-0.5 -5.5,-1.5l1.5,-1.5c1.2,0.6 2.6,1 4,1z" />
+</vector>

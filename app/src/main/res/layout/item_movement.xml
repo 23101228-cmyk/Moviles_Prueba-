@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="12dp"
+    android:background="?attr/selectableItemBackground">
+
+    <ImageView
+        android:id="@+id/imgMovIcon"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:src="@drawable/ic_deposit"
+        android:background="@drawable/bg_mov_icon"
+        android:padding="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/tvMovType"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="Depósito"
+        android:textStyle="bold"
+        android:textColor="#1A1A1A"
+        app:layout_constraintStart_toEndOf="@id/imgMovIcon"
+        app:layout_constraintEnd_toStartOf="@id/tvMovAmount"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvMovDetail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="PEN - BCP"
+        android:textSize="11sp"
+        android:textColor="#AAAAAA"
+        app:layout_constraintStart_toEndOf="@id/imgMovIcon"
+        app:layout_constraintTop_toBottomOf="@id/tvMovType" />
+
+    <TextView
+        android:id="@+id/tvMovAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+S/ 0.00"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

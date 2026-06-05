@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:layout_marginBottom="2dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="14dp"
+    android:paddingBottom="14dp"
+    android:foreground="?attr/selectableItemBackground">
+
+    <!-- Icon circle -->
+    <ImageView
+        android:id="@+id/imgMovIcon"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:background="@drawable/bg_mov_icon"
+        android:padding="10dp"
+        android:src="@drawable/ic_deposit"
+        app:tint="#F5A623"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:contentDescription="Movimiento" />
+
+    <!-- Type title -->
+    <TextView
+        android:id="@+id/tvMovType"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="8dp"
+        android:text="Recarga"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="#1A1A1A"
+        app:layout_constraintStart_toEndOf="@id/imgMovIcon"
+        app:layout_constraintEnd_toStartOf="@id/tvMovAmount"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvMovOperation" />
+
+    <!-- Operation ID -->
+    <TextView
+        android:id="@+id/tvMovOperation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="Depósito bancario · BBVA"
+        android:textSize="11sp"
+        android:textColor="#AAAAAA"
+        app:layout_constraintStart_toEndOf="@id/imgMovIcon"
+        app:layout_constraintEnd_toStartOf="@id/tvMovCurrency"
+        app:layout_constraintTop_toBottomOf="@id/tvMovType"
+        app:layout_constraintBottom_toTopOf="@id/tvMovDate" />
+
+    <!-- Date -->
+    <TextView
+        android:id="@+id/tvMovDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="20 may 2025, 10:35 a. m."
+        android:textSize="11sp"
+        android:textColor="#AAAAAA"
+        app:layout_constraintStart_toEndOf="@id/imgMovIcon"
+        app:layout_constraintEnd_toStartOf="@id/tvMovCurrency"
+        app:layout_constraintTop_toBottomOf="@id/tvMovOperation"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- Amount (right side top) -->
+    <TextView
+        android:id="@+id/tvMovAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+ S/ 500.00"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="#27AE60"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvMovCurrency" />
+
+    <!-- Currency tag (right side bottom) -->
+    <TextView
+        android:id="@+id/tvMovCurrency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PEN"
+        android:textSize="11sp"
+        android:textColor="#AAAAAA"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvMovAmount"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- Chevron -->
+    <ImageView
+        android:id="@+id/imgChevron"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/ic_chevron_right"
+        app:tint="#CCCCCC"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="-8dp"
+        android:visibility="gone"
+        android:contentDescription="Detalle" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

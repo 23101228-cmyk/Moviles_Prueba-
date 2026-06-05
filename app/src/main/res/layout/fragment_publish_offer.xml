@@ -1,0 +1,678 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="32dp">
+
+        <!-- ══ TOP BAR ══ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="52dp"
+            android:paddingBottom="8dp"
+            android:background="#FFFFFF">
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_arrow_back"
+                android:contentDescription="Volver" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Publicar oferta"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#1A1A1A"
+                android:gravity="center" />
+
+            <LinearLayout
+                android:id="@+id/layoutLang"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:background="@drawable/bg_lang_pill">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🌐 ES"
+                    android:textSize="12sp"
+                    android:textColor="#1A1A1A" />
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_marginStart="2dp"
+                    android:src="@drawable/ic_arrow_drop_down"
+                    android:contentDescription="Idioma" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ══ LOGO ══ -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_p2p_logo"
+                android:contentDescription="Logo" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="P2P"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:textColor="#1A1A1A" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="DIVISAS"
+                    android:textSize="8sp"
+                    android:letterSpacing="0.12"
+                    android:textColor="#1A1A1A" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ══ COMPRA / VENTA TOGGLE ══ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:layout_marginTop="12dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_tab_group"
+                android:orientation="horizontal"
+                android:padding="4dp">
+
+                <TextView
+                    android:id="@+id/tabCompra"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Compra"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:textColor="#FFFFFF"
+                    android:background="@drawable/bg_tab_selected" />
+
+                <TextView
+                    android:id="@+id/tabVenta"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Venta"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:textColor="#888888"
+                    android:background="@android:color/transparent" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ══ PAR DE DIVISAS ══ -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:text="Par de divisas"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#1A1A1A" />
+
+        <!-- Currency pair selector -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical">
+
+            <!-- From currency -->
+            <LinearLayout
+                android:id="@+id/layoutCurrencyFrom"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:background="@drawable/bg_chip_unselected">
+
+                <ImageView
+                    android:id="@+id/imgFlagFrom"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_flag_usd"
+                    android:contentDescription="Moneda origen" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="8dp">
+
+                    <TextView
+                        android:id="@+id/tvCurrencyFromCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="USD"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="#1A1A1A" />
+
+                    <TextView
+                        android:id="@+id/tvCurrencyFromName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dólares"
+                        android:textSize="11sp"
+                        android:textColor="#888888" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_arrow_drop_down"
+                    android:contentDescription="Seleccionar" />
+            </LinearLayout>
+
+            <!-- Arrow -->
+            <ImageView
+                android:id="@+id/imgSwapCurrencies"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ic_swap"
+                app:tint="#F5A623"
+                android:contentDescription="Intercambiar" />
+
+            <!-- To currency -->
+            <LinearLayout
+                android:id="@+id/layoutCurrencyTo"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:background="@drawable/bg_chip_unselected">
+
+                <ImageView
+                    android:id="@+id/imgFlagTo"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_flag_pen"
+                    android:contentDescription="Moneda destino" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="8dp">
+
+                    <TextView
+                        android:id="@+id/tvCurrencyToCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="PEN"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="#1A1A1A" />
+
+                    <TextView
+                        android:id="@+id/tvCurrencyToName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Soles"
+                        android:textSize="11sp"
+                        android:textColor="#888888" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_arrow_drop_down"
+                    android:contentDescription="Seleccionar" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ══ MONTO A OFERTAR ══ -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:text="Monto a ofertar"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#1A1A1A" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilMonto"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="6dp"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxStrokeColor="#E0E0E0"
+            app:prefixText="S/"
+            app:prefixTextColor="#1A1A1A"
+            app:suffixText="0.00 PEN"
+            app:suffixTextColor="#AAAAAA">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etMonto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ingresa el monto"
+                android:inputType="numberDecimal"
+                android:textSize="14sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tvMontoHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="3dp"
+            android:text="Monto mínimo: S/ 10.00 · Máximo: S/ 90,000.00"
+            android:textSize="10sp"
+            android:textColor="#AAAAAA" />
+
+        <!-- ══ TIPO DE CAMBIO ══ -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="16dp"
+            android:text="Tipo de cambio"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#1A1A1A" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilTipoCambio"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="6dp"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxStrokeColor="#E0E0E0"
+            app:prefixText="S/"
+            app:prefixTextColor="#1A1A1A"
+            app:suffixText="0.0000 PEN/USD"
+            app:suffixTextColor="#AAAAAA">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etTipoCambio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Tipo de cambio"
+                android:inputType="numberDecimal"
+                android:focusable="false"
+                android:clickable="false"
+                android:textSize="14sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tvTotalCalculado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="6dp"
+            android:text="Recibirás: 0.00 PEN"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#2E7D32"
+            android:visibility="gone" />
+
+        <!-- ══ LÍMITES ══ -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="16dp"
+            android:text="Límite mínimo (opcional)"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#1A1A1A" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:layout_marginTop="6dp">
+
+            <!-- Min -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilLimiteMin"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                app:boxStrokeColor="#E0E0E0"
+                app:prefixText="S/"
+                app:prefixTextColor="#1A1A1A">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etLimiteMin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Mínimo"
+                    android:inputType="numberDecimal"
+                    android:textSize="13sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Max -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilLimiteMax"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                app:boxStrokeColor="#E0E0E0"
+                app:prefixText="S/"
+                app:prefixTextColor="#1A1A1A">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etLimiteMax"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Máximo"
+                    android:inputType="numberDecimal"
+                    android:textSize="13sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <!-- ══ MÉTODOS DE PAGO ══ -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="16dp"
+            android:text="Métodos de pago"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#1A1A1A" />
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="8dp"
+            android:columnCount="2"
+            android:rowCount="2"
+            android:useDefaultMargins="true">
+
+            <!-- Yape -->
+            <LinearLayout
+                android:id="@+id/chipYape"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_columnWeight="1"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="6dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:background="@drawable/bg_chip_selected">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_payment_yape"
+                    android:contentDescription="Yape" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Yape"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:textColor="#1A1A1A" />
+            </LinearLayout>
+
+            <!-- Plin -->
+            <LinearLayout
+                android:id="@+id/chipPlin"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_columnWeight="1"
+                android:layout_marginBottom="6dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:background="@drawable/bg_chip_unselected">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_payment_plin"
+                    android:contentDescription="Plin" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Plin"
+                    android:textSize="13sp"
+                    android:textColor="#1A1A1A" />
+            </LinearLayout>
+
+            <!-- Transferencia bancaria -->
+            <LinearLayout
+                android:id="@+id/chipTransferencia"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_columnWeight="1"
+                android:layout_marginEnd="6dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:background="@drawable/bg_chip_unselected">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_bank_transfer"
+                    android:contentDescription="Transferencia" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Transferencia bancaria"
+                    android:textSize="11sp"
+                    android:textColor="#1A1A1A" />
+            </LinearLayout>
+
+            <!-- Wallet interno -->
+            <LinearLayout
+                android:id="@+id/chipWallet"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_columnWeight="1"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:background="@drawable/bg_chip_unselected">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_wallet"
+                    android:contentDescription="Wallet interno" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Wallet interno"
+                    android:textSize="12sp"
+                    android:textColor="#1A1A1A" />
+            </LinearLayout>
+
+        </GridLayout>
+
+        <!-- ══ TÉRMINOS DE OFERTA ══ -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="16dp"
+            android:text="Términos de la oferta (opcional)"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#1A1A1A" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilTerminos"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="6dp"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxStrokeColor="#E0E0E0"
+            app:counterEnabled="true"
+            app:counterMaxLength="250">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etTerminos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Agrega información adicional para los compradores"
+                android:inputType="textMultiLine"
+                android:minLines="3"
+                android:gravity="top"
+                android:textSize="13sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- ══ INFO BANNER ══ -->
+        <LinearLayout
+            android:id="@+id/layoutInfoBanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_info_banner"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:gravity="top">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_info"
+                app:tint="#F5A623"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="2dp"
+                android:contentDescription="Info" />
+
+            <TextView
+                android:id="@+id/tvInfoBanner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Solo si lo posees: S/ 1,345.78 PEN\nEse es el saldo que podrás usar para completar compras"
+                android:textSize="12sp"
+                android:textColor="#666666" />
+        </LinearLayout>
+
+        <!-- ══ PUBLICAR BUTTON ══ -->
+        <Button
+            android:id="@+id/btnPublicar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="24dp"
+            android:text="Publicar oferta"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#F5A623"
+            app:cornerRadius="12dp" />
+
+    </LinearLayout>
+</ScrollView>
