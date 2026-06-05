@@ -62,9 +62,21 @@
     </fragment>
 
     <fragment
+        android:id="@+id/nav_withdraw"
+        android:name="com.soltis.mya.wallet.WithdrawFragment"
+        android:label="Retirar"
+        tools:layout="@layout/fragment_withdraw" />
+
+    <fragment
         android:id="@+id/nav_movements"
         android:name="com.soltis.mya.wallet.MovementsFragment"
         android:label="Movimientos"
         tools:layout="@layout/fragment_movements" />
+
+    <fragment
+        android:id="@+id/nav_movement_detail_screen"
+        android:name="com.soltis.mya.wallet.MovementDetailFragment"
+        android:label="Detalle de movimiento"
+        tools:layout="@layout/fragment_movement_detail_screen" />
 
 </navigation>

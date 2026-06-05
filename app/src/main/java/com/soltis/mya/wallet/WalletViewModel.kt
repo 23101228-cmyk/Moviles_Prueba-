@@ -38,6 +38,11 @@ class WalletViewModel : ViewModel() {
     )
     val totalReleased: LiveData<Map<String, Double>> = _totalReleased
 
+    private val _totalWithdrawn = MutableLiveData<Map<String, Double>>(
+        mapOf("PEN" to 0.0, "USD" to 0.0, "EUR" to 0.0)
+    )
+    val totalWithdrawn: LiveData<Map<String, Double>> = _totalWithdrawn
+
     private val _movements = MutableLiveData<List<MovementItem>>(
         listOf(
             MovementItem(R.drawable.ic_deposit, android.graphics.Color.parseColor("#27AE60"),
@@ -74,6 +79,38 @@ class WalletViewModel : ViewModel() {
         val currentMovs = _movements.value?.toMutableList() ?: mutableListOf()
         currentMovs.add(0, newMovement)
         _movements.value = currentMovs
+    }
+
+    fun withdraw(currency: String, amount: Double, destination: String): Boolean {
+        val currentBalances = _balances.value?.toMutableMap() ?: mutableMapOf()
+        val available = currentBalances[currency] ?: 0.0
+
+        if (amount <= 0 || amount > available) return false
+
+        currentBalances[currency] = available - amount
+        _balances.value = currentBalances
+
+        val currentWithdrawn = _totalWithdrawn.value?.toMutableMap() ?: mutableMapOf()
+        currentWithdrawn[currency] = (currentWithdrawn[currency] ?: 0.0) + amount
+        _totalWithdrawn.value = currentWithdrawn
+
+        val symbol = currencySymbol(currency)
+        val newMovement = MovementItem(
+            R.drawable.ic_withdraw,
+            android.graphics.Color.parseColor("#E74C3C"),
+            "Retiro",
+            "Destino simulado: $destination",
+            "Hoy",
+            "- $symbol ${"%.2f".format(amount)}",
+            currency,
+            false,
+            "retiro"
+        )
+        val currentMovs = _movements.value?.toMutableList() ?: mutableListOf()
+        currentMovs.add(0, newMovement)
+        _movements.value = currentMovs
+
+        return true
     }
 
     fun registerOfferImpact(type: String, currency: String, amount: Double) {
@@ -114,5 +151,14 @@ class WalletViewModel : ViewModel() {
             currentMovs.add(0, movement)
             _movements.value = currentMovs
         }
+    }
+}
+
+fun currencySymbol(currency: String): String {
+    return when (currency) {
+        "PEN" -> "S/"
+        "USD" -> "$"
+        "EUR" -> "EUR"
+        else -> currency
     }
 }

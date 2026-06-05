@@ -7,14 +7,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.navigation.fragment.findNavController
 import com.soltis.mya.R
 import com.soltis.mya.databinding.FragmentWalletBinding
 import com.soltis.mya.databinding.ItemMovementBinding
 
-// Modelo de datos para movimientos
 data class Movement(
     val iconRes: Int,
     val type: String,
@@ -30,6 +29,7 @@ class WalletFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: WalletViewModel by activityViewModels()
+    private var accountsExpanded = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,23 +41,19 @@ class WalletFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
-        // Observar saldos disponibles
+
         viewModel.balances.observe(viewLifecycleOwner) { balances ->
             updateTotalBalanceUI(balances)
             updateIndividualBalancesUI()
         }
-
-        // Observar saldos retenidos
-        viewModel.heldBalances.observe(viewLifecycleOwner) { held ->
+        viewModel.heldBalances.observe(viewLifecycleOwner) {
             updateIndividualBalancesUI()
             updateMetricsUI()
         }
-
-        // Observar métricas de recarga y liberación
         viewModel.totalRecharged.observe(viewLifecycleOwner) { updateMetricsUI() }
         viewModel.totalReleased.observe(viewLifecycleOwner) { updateMetricsUI() }
-        
+        viewModel.totalWithdrawn.observe(viewLifecycleOwner) { updateMetricsUI() }
+
         setupMovements()
         setupClickListeners()
     }
@@ -66,23 +62,19 @@ class WalletFragment : Fragment() {
         val recharged = viewModel.totalRecharged.value ?: emptyMap()
         val released = viewModel.totalReleased.value ?: emptyMap()
         val held = viewModel.heldBalances.value ?: emptyMap()
+        val withdrawn = viewModel.totalWithdrawn.value ?: emptyMap()
 
-        // Para el resumen, mostramos el total equivalente en soles (PEN)
-        val totalRechargedPen = (recharged["PEN"] ?: 0.0) + (recharged["USD"] ?: 0.0) * 3.75
-        val totalHeldPen = (held["PEN"] ?: 0.0) + (held["USD"] ?: 0.0) * 3.75
-        val totalReleasedPen = (released["PEN"] ?: 0.0) + (released["USD"] ?: 0.0) * 3.75
+        binding.tvMetricRecharge.text = "S/ ${"%,.2f".format(toPen(recharged))}"
+        binding.tvMetricHeld.text = "S/ ${"%,.2f".format(toPen(held))}"
+        binding.tvMetricRelease.text = "S/ ${"%,.2f".format(toPen(released) + toPen(withdrawn))}"
+    }
 
-        binding.tvMetricRecharge.text = "S/ ${"%,.2f".format(totalRechargedPen)}"
-        binding.tvMetricHeld.text = "S/ ${"%,.2f".format(totalHeldPen)}"
-        binding.tvMetricRelease.text = "S/ ${"%,.2f".format(totalReleasedPen)}"
+    private fun toPen(values: Map<String, Double>): Double {
+        return (values["PEN"] ?: 0.0) + (values["USD"] ?: 0.0) * 3.75 + (values["EUR"] ?: 0.0) * 4.05
     }
 
     private fun updateTotalBalanceUI(balances: Map<String, Double>) {
-        val penBalance = balances["PEN"] ?: 0.0
-        val usdBalance = balances["USD"] ?: 0.0
-        val eurBalance = balances["EUR"] ?: 0.0
-
-        val totalInPen = penBalance + (usdBalance * 3.75) + (eurBalance * 4.05)
+        val totalInPen = toPen(balances)
         val totalInUsd = totalInPen / 3.75
 
         binding.tvBalanceAmount.text = "S/ ${"%,.2f".format(totalInPen)}"
@@ -93,46 +85,39 @@ class WalletFragment : Fragment() {
         val balances = viewModel.balances.value ?: return
         val held = viewModel.heldBalances.value ?: return
 
-        // PEN
-        binding.itemPen.apply {
-            val amount = balances["PEN"] ?: 0.0
-            val heldAmount = held["PEN"] ?: 0.0
-            imgCurrencyFlag.setImageResource(R.drawable.ic_flag_pen)
-            tvCurrencyCode.text = "PEN"
-            tvCurrencyName.text = "Sol peruano"
-            tvCurrencyAmount.text = "S/ ${"%,.2f".format(amount)}"
-            tvCurrencyAmountAlt.text = "Retenido: S/ ${"%,.2f".format(heldAmount)}"
-            tvCurrencyAmountAlt.setTextColor(if (heldAmount > 0) 0xFFE67E22.toInt() else 0xFF757575.toInt())
-        }
-
-        // USD
-        binding.itemUsd.apply {
-            val amount = balances["USD"] ?: 0.0
-            val heldAmount = held["USD"] ?: 0.0
-            imgCurrencyFlag.setImageResource(R.drawable.ic_flag_usd)
-            tvCurrencyCode.text = "USD"
-            tvCurrencyName.text = "Dólar estadounidense"
-            tvCurrencyAmount.text = "$ ${"%,.2f".format(amount)}"
-            tvCurrencyAmountAlt.text = "Retenido: $ ${"%,.2f".format(heldAmount)}"
-            tvCurrencyAmountAlt.setTextColor(if (heldAmount > 0) 0xFFE67E22.toInt() else 0xFF757575.toInt())
-        }
+        bindCurrency("PEN", "Sol peruano", R.drawable.ic_flag_pen, "S/", balances, held, binding.itemPen)
+        bindCurrency("USD", "Dolar estadounidense", R.drawable.ic_flag_usd, "$", balances, held, binding.itemUsd)
+        bindCurrency("EUR", "Euro", R.drawable.ic_flag_eur, "EUR", balances, held, binding.itemEur)
     }
 
-    private fun setupCurrencies() {
-        // Este método ya no es necesario o puede quedar vacío
+    private fun bindCurrency(
+        code: String,
+        name: String,
+        flagRes: Int,
+        symbol: String,
+        balances: Map<String, Double>,
+        held: Map<String, Double>,
+        item: com.soltis.mya.databinding.ItemCurrencyBinding
+    ) {
+        val amount = balances[code] ?: 0.0
+        val heldAmount = held[code] ?: 0.0
+
+        item.imgCurrencyFlag.setImageResource(flagRes)
+        item.tvCurrencyCode.text = code
+        item.tvCurrencyName.text = name
+        item.tvCurrencyAmount.text = "$symbol ${"%,.2f".format(amount)}"
+        item.tvCurrencyAmountAlt.text = "Retenido: $symbol ${"%,.2f".format(heldAmount)}"
+        item.tvCurrencyAmountAlt.setTextColor(if (heldAmount > 0) 0xFFE67E22.toInt() else 0xFF757575.toInt())
     }
 
     private fun setupMovements() {
         viewModel.movements.observe(viewLifecycleOwner) { movements ->
-            binding.rvMovimientos.apply {
-                layoutManager = LinearLayoutManager(context)
-                // Adaptar MovementItem de ViewModel a Movement de este Fragment si es necesario, 
-                // o mejor, usar el mismo modelo. Por ahora, mapeamos rápido:
-                val mappedMovements = movements.take(5).map { 
+            binding.rvMovimientos.layoutManager = LinearLayoutManager(context)
+            binding.rvMovimientos.adapter = MovementAdapter(
+                movements.take(5).map {
                     Movement(it.iconRes, it.type, it.operation, it.amount, "Completado", it.isPositive)
                 }
-                adapter = MovementAdapter(mappedMovements)
-            }
+            )
         }
     }
 
@@ -140,8 +125,17 @@ class WalletFragment : Fragment() {
         binding.btnDepositar.setOnClickListener {
             findNavController().navigate(R.id.nav_deposit)
         }
-        binding.btnRetirar.setOnClickListener { Toast.makeText(context, "Retirar", Toast.LENGTH_SHORT).show() }
-        binding.btnTransferir.setOnClickListener { Toast.makeText(context, "Transferir", Toast.LENGTH_SHORT).show() }
+        binding.btnRetirar.setOnClickListener {
+            findNavController().navigate(R.id.nav_withdraw)
+        }
+        binding.btnTransferir.setOnClickListener {
+            Toast.makeText(context, "Transferencia simulada pendiente", Toast.LENGTH_SHORT).show()
+        }
+        binding.layoutMisCuentasHeader.setOnClickListener {
+            accountsExpanded = !accountsExpanded
+            binding.layoutMisCuentasContent.visibility = if (accountsExpanded) View.VISIBLE else View.GONE
+            binding.tvMisCuentasArrow.text = if (accountsExpanded) "v" else ">"
+        }
     }
 
     override fun onDestroyView() {
@@ -150,7 +144,6 @@ class WalletFragment : Fragment() {
     }
 }
 
-// Adaptador usando ViewBinding para los ítems de la lista
 class MovementAdapter(private val items: List<Movement>) :
     RecyclerView.Adapter<MovementAdapter.ViewHolder>() {
 
@@ -166,6 +159,7 @@ class MovementAdapter(private val items: List<Movement>) :
         with(holder.binding) {
             imgMovIcon.setImageResource(item.iconRes)
             tvMovType.text = item.type
+            tvMovDetail.text = item.detail
             tvMovAmount.text = item.amount
             tvMovAmount.setTextColor(if (item.isPositive) 0xFF27AE60.toInt() else 0xFFE74C3C.toInt())
         }
