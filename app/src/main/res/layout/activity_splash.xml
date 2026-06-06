@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="@color/binance_bg">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="P2P DIVISAS"
-            android:textColor="#1A1A1A"
+            android:textColor="@color/binance_text_primary"
             android:textSize="24sp"
             android:textStyle="bold"
             android:letterSpacing="0.1"/>
@@ -35,7 +35,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="32dp"
-            android:indeterminateTint="#F5A623" />
+            android:indeterminateTint="@color/binance_yellow" />
     </LinearLayout>
 
     <TextView
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:text="Seguro · Rápido · Sin Comisiones"
-        android:textColor="#888888"
+        android:textColor="@color/binance_text_secondary"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

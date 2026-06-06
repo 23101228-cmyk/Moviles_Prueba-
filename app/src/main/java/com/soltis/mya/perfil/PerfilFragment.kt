@@ -268,7 +268,7 @@ class PerfilFragment : Fragment() {
     private fun createPendingCard(): View {
         return TextView(requireContext()).apply {
             text = "Transferencia bancaria: Pendiente"
-            setTextColor(0xFF757575.toInt())
+            setTextColor(0xFFB7BDC6.toInt())
             textSize = 14f
             setPadding(dp(16), dp(16), dp(16), dp(16))
         }
@@ -309,7 +309,7 @@ class PerfilFragment : Fragment() {
 
         val title = TextView(requireContext()).apply {
             text = cardData.bank
-            setTextColor(0xFF263238.toInt())
+            setTextColor(0xFFEAECEF.toInt())
             textSize = 16f
             setTypeface(typeface, Typeface.BOLD)
         }
@@ -436,7 +436,7 @@ class PerfilFragment : Fragment() {
     private fun createReadOnlyText(value: String): TextView {
         return TextView(requireContext()).apply {
             text = value
-            setTextColor(0xFF757575.toInt())
+            setTextColor(0xFFB7BDC6.toInt())
             textSize = 13f
             setPadding(0, 0, 0, dp(10))
         }
@@ -455,7 +455,7 @@ class PerfilFragment : Fragment() {
     private fun createLabel(text: String): TextView {
         return TextView(requireContext()).apply {
             this.text = text
-            setTextColor(0xFF757575.toInt())
+            setTextColor(0xFFB7BDC6.toInt())
             textSize = 13f
             setTypeface(typeface, Typeface.BOLD)
         }

@@ -57,6 +57,8 @@ class LocalOfferStore(context: Context) {
 
     fun findById(id: String): P2pOffer? = getOffers().firstOrNull { it.id == id }
 
+    fun getAllOffers(): List<P2pOffer> = getOffers().sortedByDescending { it.createdAt }
+
     fun cancelOffer(id: String): P2pOffer? {
         var cancelled: P2pOffer? = null
         val updated = getOffers().map { offer ->

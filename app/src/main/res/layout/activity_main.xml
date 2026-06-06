@@ -22,7 +22,7 @@
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="85dp"
-        android:background="#FFFFFF"
+        android:background="@color/binance_bg"
         app:elevation="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

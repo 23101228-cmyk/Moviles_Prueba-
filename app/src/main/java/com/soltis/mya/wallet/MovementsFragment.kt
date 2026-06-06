@@ -175,7 +175,7 @@ class MovementsAdapter(
         holder.tvDate.text = item.date
         holder.tvAmount.text = item.amount
         holder.tvCurrency.text = item.currency
-        holder.tvAmount.setTextColor(if (item.isPositive) Color.parseColor("#27AE60") else Color.parseColor("#E74C3C"))
+        holder.tvAmount.setTextColor(if (item.isPositive) Color.parseColor("#0ECB81") else Color.parseColor("#F6465D"))
         holder.itemView.setOnClickListener { onClick(item) }
     }
 

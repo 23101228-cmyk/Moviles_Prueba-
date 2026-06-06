@@ -114,10 +114,10 @@ class MyOfferAdapter(
             btnCancelOffer.setOnClickListener { onCancelClick(item) }
 
             if (item.type == "VENTA") {
-                tvOfferType.setTextColor(0xFFE74C3C.toInt())
+                tvOfferType.setTextColor(0xFFF6465D.toInt())
                 tvOfferType.setBackgroundColor(0xFFFFEBEE.toInt())
             } else {
-                tvOfferType.setTextColor(0xFF27AE60.toInt())
+                tvOfferType.setTextColor(0xFF0ECB81.toInt())
                 tvOfferType.setBackgroundColor(0xFFE8F5E9.toInt())
             }
         }

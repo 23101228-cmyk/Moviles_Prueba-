@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F7FA">
+    android:background="@color/binance_bg">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
                     android:background="@drawable/bg_circle_outline"
                     android:padding="8dp"
                     android:src="@drawable/ic_person"
-                    app:tint="#FFFFFF"
+                    app:tint="@color/binance_text_primary"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
@@ -43,7 +43,7 @@
                     android:layout_marginTop="24dp"
                     android:text="Saldo total disponible"
                     android:textSize="14sp"
-                    android:textColor="#AAAAAA"
+                    android:textColor="@color/binance_text_secondary"
                     android:letterSpacing="0.05"
                     app:layout_constraintTop_toBottomOf="@id/btnPerfil"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -55,7 +55,7 @@
                     android:text="S/ 12,456.78"
                     android:textSize="36sp"
                     android:textStyle="bold"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/binance_text_primary"
                     app:layout_constraintTop_toBottomOf="@id/tvBalanceLabel"
                     app:layout_constraintStart_toStartOf="parent" />
 
@@ -65,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:text="≈ $3,201.06 USD"
                     android:textSize="16sp"
-                    android:textColor="#888888"
+                    android:textColor="@color/binance_text_secondary"
                     app:layout_constraintTop_toBottomOf="@id/tvBalanceAmount"
                     app:layout_constraintStart_toStartOf="parent" />
 
@@ -91,14 +91,14 @@
                             android:background="@drawable/bg_action_btn"
                             android:src="@drawable/ic_deposit"
                             android:padding="16dp"
-                            app:tint="#1A1A1A"
+                            app:tint="@color/binance_text_primary"
                             android:elevation="4dp" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="14dp"
                             android:text="Depositar"
-                            android:textColor="#FFFFFF"
+                            android:textColor="@color/binance_text_primary"
                             android:textSize="13sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -116,14 +116,14 @@
                             android:background="@drawable/bg_action_btn"
                             android:src="@drawable/ic_withdraw"
                             android:padding="16dp"
-                            app:tint="#1A1A1A"
+                            app:tint="@color/binance_text_primary"
                             android:elevation="4dp" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="14dp"
                             android:text="Retirar"
-                            android:textColor="#FFFFFF"
+                            android:textColor="@color/binance_text_primary"
                             android:textSize="13sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -144,7 +144,7 @@
                     android:text="Resumen de Operaciones"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="#1A1A1A"
+                    android:textColor="@color/binance_text_primary"
                     android:layout_marginBottom="12dp" />
 
                 <LinearLayout
@@ -171,7 +171,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Recarga"
                                 android:textSize="11sp"
-                                android:textColor="#757575" />
+                                android:textColor="@color/binance_text_secondary" />
                             <TextView
                                 android:id="@+id/tvMetricRecharge"
                                 android:layout_width="wrap_content"
@@ -179,7 +179,7 @@
                                 android:text="S/ 0.00"
                                 android:textSize="14sp"
                                 android:textStyle="bold"
-                                android:textColor="#27AE60" />
+                                android:textColor="@color/binance_green" />
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
 
@@ -201,7 +201,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Retención"
                                 android:textSize="11sp"
-                                android:textColor="#757575" />
+                                android:textColor="@color/binance_text_secondary" />
                             <TextView
                                 android:id="@+id/tvMetricHeld"
                                 android:layout_width="wrap_content"
@@ -209,7 +209,7 @@
                                 android:text="S/ 0.00"
                                 android:textSize="14sp"
                                 android:textStyle="bold"
-                                android:textColor="#E67E22" />
+                                android:textColor="@color/binance_yellow" />
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
 
@@ -230,7 +230,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Liberación"
                                 android:textSize="11sp"
-                                android:textColor="#757575" />
+                                android:textColor="@color/binance_text_secondary" />
                             <TextView
                                 android:id="@+id/tvMetricRelease"
                                 android:layout_width="wrap_content"
@@ -238,7 +238,7 @@
                                 android:text="S/ 0.00"
                                 android:textSize="14sp"
                                 android:textStyle="bold"
-                                android:textColor="#2980B9" />
+                                android:textColor="@color/binance_yellow" />
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
                 </LinearLayout>
@@ -259,7 +259,7 @@
                         android:text="Mis Cuentas"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        android:textColor="#1A1A1A" />
+                        android:textColor="@color/binance_text_primary" />
 
                     <TextView
                         android:id="@+id/tvMisCuentasArrow"
@@ -267,7 +267,7 @@
                         android:layout_height="36dp"
                         android:gravity="center"
                         android:text="v"
-                        android:textColor="#1A1A1A"
+                        android:textColor="@color/binance_text_primary"
                         android:textSize="18sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -298,7 +298,7 @@
                     android:text="Actividad Reciente"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="#1A1A1A"
+                    android:textColor="@color/binance_text_primary"
                     android:layout_marginBottom="16dp" />
 
                 <com.google.android.material.card.MaterialCardView

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@color/binance_bg"
     android:fillViewport="true">
 
     <LinearLayout
@@ -43,7 +43,7 @@
                     android:text="P2P"
                     android:textStyle="bold"
                     android:textSize="27sp"
-                    android:textColor="#1A1A1A" />
+                    android:textColor="@color/binance_text_primary" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -51,7 +51,7 @@
                     android:text="DIVISAS"
                     android:textSize="15sp"
                     android:letterSpacing="0.12"
-                    android:textColor="#1A1A1A" />
+                    android:textColor="@color/binance_text_primary" />
             </LinearLayout>
         </LinearLayout>
 
@@ -64,7 +64,7 @@
             android:text="Iniciar sesión"
             android:textSize="39sp"
             android:textStyle="bold"
-            android:textColor="#1A1A1A" />
+            android:textColor="@color/binance_text_primary" />
 
         <!-- Subtitle -->
         <TextView
@@ -74,7 +74,7 @@
             android:layout_marginTop="9dp"
             android:text="Accede a tu cuenta y comienza a"
             android:textSize="20sp"
-            android:textColor="#666666"
+            android:textColor="@color/binance_text_secondary"
             android:gravity="center" />
 
         <TextView
@@ -84,7 +84,7 @@
             android:layout_gravity="center_horizontal"
             android:text="comprar y vender divisas."
             android:textSize="20sp"
-            android:textColor="#F5A623"
+            android:textColor="@color/binance_yellow"
             android:textStyle="bold"
             android:gravity="center" />
 
@@ -97,7 +97,7 @@
             android:text="Correo electrónico"
             android:textSize="21sp"
             android:textStyle="bold"
-            android:textColor="#1A1A1A" />
+            android:textColor="@color/binance_text_primary" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilCorreo"
@@ -109,12 +109,14 @@
             app:boxCornerRadiusBottomStart="15dp"
             app:boxCornerRadiusTopEnd="15dp"
             app:boxCornerRadiusTopStart="15dp"
-            app:boxStrokeColor="#E0E0E0"
+            app:boxStrokeColor="@color/binance_border"
             app:boxStrokeWidthFocused="2dp"
             app:startIconDrawable="@drawable/ic_email"
             app:startIconTint="#BDBDBD">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:textColorHint="@color/binance_text_secondary"
+                android:textColor="@color/binance_text_primary"
                 android:id="@+id/etCorreo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -133,7 +135,7 @@
             android:text="Contraseña"
             android:textSize="21sp"
             android:textStyle="bold"
-            android:textColor="#1A1A1A" />
+            android:textColor="@color/binance_text_primary" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilContrasena"
@@ -145,13 +147,15 @@
             app:boxCornerRadiusBottomStart="15dp"
             app:boxCornerRadiusTopEnd="15dp"
             app:boxCornerRadiusTopStart="15dp"
-            app:boxStrokeColor="#E0E0E0"
+            app:boxStrokeColor="@color/binance_border"
             app:boxStrokeWidthFocused="2dp"
             app:startIconDrawable="@drawable/ic_lock"
             app:startIconTint="#BDBDBD"
             app:endIconMode="password_toggle">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:textColorHint="@color/binance_text_secondary"
+                android:textColor="@color/binance_text_primary"
                 android:id="@+id/etContrasena"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -161,7 +165,7 @@
                 android:padding="20dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- ── Recordarme + ¿Olvidaste tu contraseña? ── -->
+        <!-- ── ¿Olvidaste tu contraseña? ── -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -169,23 +173,13 @@
             android:layout_marginTop="18dp"
             android:gravity="center">
 
-            <CheckBox
-                android:id="@+id/cbRecordarme"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Recordarme"
-                android:textSize="20sp"
-                android:textColor="#444444"
-                android:buttonTint="#F5A623" />
-
             <TextView
                 android:id="@+id/tvOlvideContrasena"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:text="¿Olvidaste tu contraseña?"
                 android:textSize="20sp"
-                android:textColor="#F5A623"
+                android:textColor="@color/binance_yellow"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -198,8 +192,8 @@
             android:text="Ingresar"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#F5A623"
+            android:textColor="@color/binance_text_primary"
+            android:backgroundTint="@color/binance_yellow"
             app:cornerRadius="18dp" />
 
         <!-- ── ¿No tienes cuenta? Regístrate ── -->
@@ -216,7 +210,7 @@
                 android:layout_height="wrap_content"
                 android:text="¿No tienes cuenta? "
                 android:textSize="20sp"
-                android:textColor="#666666" />
+                android:textColor="@color/binance_text_secondary" />
 
             <TextView
                 android:id="@+id/tvRegistrate"
@@ -225,7 +219,7 @@
                 android:layout_marginTop="4dp"
                 android:text="Regístrate"
                 android:textSize="20sp"
-                android:textColor="#F5A623"
+                android:textColor="@color/binance_yellow"
                 android:textStyle="bold" />
         </LinearLayout>
 
