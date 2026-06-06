@@ -12,50 +12,32 @@ class WalletViewModel : ViewModel() {
     private var currentEmail: String? = null
 
     // Saldos Disponibles (Lo que el usuario puede usar)
-    private val _balances = MutableLiveData<Map<String, Double>>(
-        mapOf(
-            "PEN" to 8240.50,
-            "USD" to 2150.00,
-            "EUR" to 66.28
-        )
-    )
+    private val _balances = MutableLiveData<Map<String, Double>>(zeroBalances())
     val balances: LiveData<Map<String, Double>> = _balances
 
     // Saldos Retenidos (Dinero en garantía por transacciones P2P)
-    private val _heldBalances = MutableLiveData<Map<String, Double>>(
-        mapOf(
-            "PEN" to 390.00,
-            "USD" to 45.00,
-            "EUR" to 0.0
-        )
-    )
+    private val _heldBalances = MutableLiveData<Map<String, Double>>(zeroBalances())
     val heldBalances: LiveData<Map<String, Double>> = _heldBalances
 
     // Métricas acumuladas (Recarga total y Liberaciones totales)
-    private val _totalRecharged = MutableLiveData<Map<String, Double>>(
-        mapOf("PEN" to 12500.0, "USD" to 3000.0, "EUR" to 100.0)
-    )
+    private val _totalRecharged = MutableLiveData<Map<String, Double>>(zeroBalances())
     val totalRecharged: LiveData<Map<String, Double>> = _totalRecharged
 
-    private val _totalReleased = MutableLiveData<Map<String, Double>>(
-        mapOf("PEN" to 4500.0, "USD" to 850.0, "EUR" to 33.0)
-    )
+    private val _totalReleased = MutableLiveData<Map<String, Double>>(zeroBalances())
     val totalReleased: LiveData<Map<String, Double>> = _totalReleased
 
-    private val _totalWithdrawn = MutableLiveData<Map<String, Double>>(
-        mapOf("PEN" to 0.0, "USD" to 0.0, "EUR" to 0.0)
-    )
+    private val _totalWithdrawn = MutableLiveData<Map<String, Double>>(zeroBalances())
     val totalWithdrawn: LiveData<Map<String, Double>> = _totalWithdrawn
 
     private val _movements = MutableLiveData<List<MovementItem>>(
         listOf(
-            MovementItem(R.drawable.ic_deposit, android.graphics.Color.parseColor("#27AE60"),
+            MovementItem(R.drawable.ic_deposit, android.graphics.Color.parseColor("#0ECB81"),
                 "Recarga", "Depósito bancario · BBVA",
                 "20 may 2025, 10:35 a. m.", "+ S/ 500.00", "PEN", true, "recarga"),
-            MovementItem(R.drawable.ic_lock, android.graphics.Color.parseColor("#E67E22"),
+            MovementItem(R.drawable.ic_lock, android.graphics.Color.parseColor("#F0B90B"),
                 "Retención", "Operación #P2P-84521",
                 "20 may 2025, 10:18 a. m.", "- S/ 320.00", "PEN", false, "retencion"),
-            MovementItem(R.drawable.ic_lock, android.graphics.Color.parseColor("#27AE60"),
+            MovementItem(R.drawable.ic_lock, android.graphics.Color.parseColor("#0ECB81"),
                 "Liberación", "Operación #P2P-84521",
                 "20 may 2025, 10:42 a. m.", "+ S/ 320.00", "PEN", true, "liberacion")
         )
@@ -71,13 +53,11 @@ class WalletViewModel : ViewModel() {
         currentEmail = user.email
         _balances.value = user.balances.ifEmpty { zeroBalances() }
         _heldBalances.value = user.heldBalances.ifEmpty { zeroBalances() }
-        _totalWithdrawn.value = zeroBalances()
+        _totalRecharged.value = user.totalRecharged.ifEmpty { zeroBalances() }
+        _totalReleased.value = user.totalReleased.ifEmpty { zeroBalances() }
+        _totalWithdrawn.value = user.totalWithdrawn.ifEmpty { zeroBalances() }
 
-        _movements.value = if (user.balances.values.any { it > 0.0 } || user.heldBalances.values.any { it > 0.0 }) {
-            demoMovements()
-        } else {
-            emptyList()
-        }
+        _movements.value = emptyList()
     }
 
     fun addDeposit(currency: String, amount: Double) {
@@ -94,7 +74,7 @@ class WalletViewModel : ViewModel() {
         // Agregar al historial
         val symbol = if (currency == "PEN") "S/" else if (currency == "USD") "$" else "€"
         val newMovement = MovementItem(
-            R.drawable.ic_deposit, android.graphics.Color.parseColor("#27AE60"),
+            R.drawable.ic_deposit, android.graphics.Color.parseColor("#0ECB81"),
             "Recarga", "Depósito manual",
             "Hoy", "+ $symbol ${"%.2f".format(amount)}", currency, true, "recarga"
         )
@@ -120,7 +100,7 @@ class WalletViewModel : ViewModel() {
         val symbol = currencySymbol(currency)
         val newMovement = MovementItem(
             R.drawable.ic_withdraw,
-            android.graphics.Color.parseColor("#E74C3C"),
+            android.graphics.Color.parseColor("#F6465D"),
             "Retiro",
             "Destino simulado: $destination",
             "Hoy",
@@ -155,7 +135,7 @@ class WalletViewModel : ViewModel() {
 
                 // Registrar movimiento de retención
                 val movement = MovementItem(
-                    R.drawable.ic_lock, android.graphics.Color.parseColor("#E67E22"),
+                    R.drawable.ic_lock, android.graphics.Color.parseColor("#F0B90B"),
                     "Retención", "Oferta de venta publicada",
                     "Hoy", "- $symbol ${"%.2f".format(amount)}", currency, false, "retencion"
                 )
@@ -168,7 +148,7 @@ class WalletViewModel : ViewModel() {
             // En una COMPRA, registramos el compromiso en el historial (opcionalmente reteniendo el contra-valor si fuera wallet interna)
             // Por simplicidad de la simulación, registraremos el inicio de la operación
             val movement = MovementItem(
-                R.drawable.ic_offers, android.graphics.Color.parseColor("#2980B9"),
+                R.drawable.ic_offers, android.graphics.Color.parseColor("#F0B90B"),
                 "Pendiente", "Oferta de compra publicada",
                 "Hoy", "En espera", currency, true, "pago"
             )
@@ -189,11 +169,12 @@ class WalletViewModel : ViewModel() {
         currentBalances[currency] = (currentBalances[currency] ?: 0.0) + amount
         _heldBalances.value = currentHeld
         _balances.value = currentBalances
+        incrementReleased(currency, amount)
 
         val symbol = currencySymbol(currency)
         val movement = MovementItem(
             R.drawable.ic_lock,
-            android.graphics.Color.parseColor("#27AE60"),
+            android.graphics.Color.parseColor("#0ECB81"),
             "Liberacion",
             "Oferta cancelada",
             "Hoy",
@@ -234,7 +215,7 @@ class WalletViewModel : ViewModel() {
         _balances.value = currentBalances
         val movement = MovementItem(
             R.drawable.ic_swap,
-            android.graphics.Color.parseColor("#2980B9"),
+            android.graphics.Color.parseColor("#F0B90B"),
             if (offerType == "VENTA") "Compra P2P" else "Venta P2P",
             "Operacion Wallet - $offerId",
             "Hoy",
@@ -268,7 +249,7 @@ class WalletViewModel : ViewModel() {
             currency = currency,
             positive = false,
             category = "retencion",
-            color = "#E67E22"
+            color = "#F0B90B"
         )
         persistWallet()
         return true
@@ -281,6 +262,7 @@ class WalletViewModel : ViewModel() {
 
         currentHeld[currency] = held - amount
         _heldBalances.value = currentHeld
+        incrementReleased(currency, amount)
         addMovement(
             type = "Venta P2P",
             operation = "Pago externo confirmado - $offerId",
@@ -288,7 +270,7 @@ class WalletViewModel : ViewModel() {
             currency = currency,
             positive = false,
             category = "pago",
-            color = "#2980B9"
+            color = "#F0B90B"
         )
         persistWallet()
         return true
@@ -305,7 +287,7 @@ class WalletViewModel : ViewModel() {
             currency = currency,
             positive = true,
             category = "pago",
-            color = "#27AE60"
+            color = "#0ECB81"
         )
         persistWallet()
         return true
@@ -339,20 +321,29 @@ class WalletViewModel : ViewModel() {
     private fun persistWallet() {
         userStore?.updateCurrentWallet(
             balances = _balances.value ?: zeroBalances(),
-            heldBalances = _heldBalances.value ?: zeroBalances()
+            heldBalances = _heldBalances.value ?: zeroBalances(),
+            totalRecharged = _totalRecharged.value ?: zeroBalances(),
+            totalReleased = _totalReleased.value ?: zeroBalances(),
+            totalWithdrawn = _totalWithdrawn.value ?: zeroBalances()
         )
+    }
+
+    private fun incrementReleased(currency: String, amount: Double) {
+        val released = _totalReleased.value?.toMutableMap() ?: mutableMapOf()
+        released[currency] = (released[currency] ?: 0.0) + amount
+        _totalReleased.value = released
     }
 
     private fun zeroBalances() = mapOf("PEN" to 0.0, "USD" to 0.0, "EUR" to 0.0)
 
     private fun demoMovements() = listOf(
-        MovementItem(R.drawable.ic_deposit, android.graphics.Color.parseColor("#27AE60"),
+        MovementItem(R.drawable.ic_deposit, android.graphics.Color.parseColor("#0ECB81"),
             "Recarga", "Deposito bancario - BBVA",
             "20 may 2025, 10:35 a. m.", "+ S/ 500.00", "PEN", true, "recarga"),
-        MovementItem(R.drawable.ic_lock, android.graphics.Color.parseColor("#E67E22"),
+        MovementItem(R.drawable.ic_lock, android.graphics.Color.parseColor("#F0B90B"),
             "Retencion", "Operacion #P2P-84521",
             "20 may 2025, 10:18 a. m.", "- S/ 320.00", "PEN", false, "retencion"),
-        MovementItem(R.drawable.ic_lock, android.graphics.Color.parseColor("#27AE60"),
+        MovementItem(R.drawable.ic_lock, android.graphics.Color.parseColor("#0ECB81"),
             "Liberacion", "Operacion #P2P-84521",
             "20 may 2025, 10:42 a. m.", "+ S/ 320.00", "PEN", true, "liberacion")
     )

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@color/binance_bg"
     android:fillViewport="true">
 
     <LinearLayout
@@ -43,7 +43,7 @@
                     android:text="P2P"
                     android:textStyle="bold"
                     android:textSize="27sp"
-                    android:textColor="#1A1A1A" />
+                    android:textColor="@color/binance_text_primary" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -51,7 +51,7 @@
                     android:text="DIVISAS"
                     android:textSize="15sp"
                     android:letterSpacing="0.12"
-                    android:textColor="#1A1A1A" />
+                    android:textColor="@color/binance_text_primary" />
             </LinearLayout>
         </LinearLayout>
 
@@ -64,7 +64,7 @@
             android:text="Crear cuenta"
             android:textSize="39sp"
             android:textStyle="bold"
-            android:textColor="#1A1A1A" />
+            android:textColor="@color/binance_text_primary" />
 
         <!-- Subtitle -->
         <TextView
@@ -74,7 +74,7 @@
             android:layout_marginTop="9dp"
             android:text="Únete a nuestra plataforma P2P y accede\na la mejor experiencia de compra y venta de divisas."
             android:textSize="20sp"
-            android:textColor="#666666"
+            android:textColor="@color/binance_text_secondary"
             android:gravity="center" />
 
         <!-- ── Nombre completo ── -->
@@ -86,7 +86,7 @@
             android:text="Nombre completo"
             android:textSize="21sp"
             android:textStyle="bold"
-            android:textColor="#1A1A1A" />
+            android:textColor="@color/binance_text_primary" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilNombreCompleto"
@@ -98,12 +98,14 @@
             app:boxCornerRadiusBottomStart="15dp"
             app:boxCornerRadiusTopEnd="15dp"
             app:boxCornerRadiusTopStart="15dp"
-            app:boxStrokeColor="#E0E0E0"
+            app:boxStrokeColor="@color/binance_border"
             app:boxStrokeWidthFocused="2dp"
             app:startIconDrawable="@drawable/ic_person"
             app:startIconTint="#BDBDBD">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:textColorHint="@color/binance_text_secondary"
+                android:textColor="@color/binance_text_primary"
                 android:id="@+id/etNombreCompleto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -122,7 +124,7 @@
             android:text="Correo electrónico"
             android:textSize="21sp"
             android:textStyle="bold"
-            android:textColor="#1A1A1A" />
+            android:textColor="@color/binance_text_primary" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilCorreo"
@@ -134,12 +136,14 @@
             app:boxCornerRadiusBottomStart="15dp"
             app:boxCornerRadiusTopEnd="15dp"
             app:boxCornerRadiusTopStart="15dp"
-            app:boxStrokeColor="#E0E0E0"
+            app:boxStrokeColor="@color/binance_border"
             app:boxStrokeWidthFocused="2dp"
             app:startIconDrawable="@drawable/ic_email"
             app:startIconTint="#BDBDBD">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:textColorHint="@color/binance_text_secondary"
+                android:textColor="@color/binance_text_primary"
                 android:id="@+id/etCorreo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -158,7 +162,7 @@
             android:text="Nombre de usuario"
             android:textSize="21sp"
             android:textStyle="bold"
-            android:textColor="#1A1A1A" />
+            android:textColor="@color/binance_text_primary" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilUsuario"
@@ -170,12 +174,14 @@
             app:boxCornerRadiusBottomStart="15dp"
             app:boxCornerRadiusTopEnd="15dp"
             app:boxCornerRadiusTopStart="15dp"
-            app:boxStrokeColor="#E0E0E0"
+            app:boxStrokeColor="@color/binance_border"
             app:boxStrokeWidthFocused="2dp"
             app:startIconDrawable="@drawable/ic_person"
             app:startIconTint="#BDBDBD">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:textColorHint="@color/binance_text_secondary"
+                android:textColor="@color/binance_text_primary"
                 android:id="@+id/etUsuario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -194,7 +200,7 @@
             android:text="Contraseña"
             android:textSize="21sp"
             android:textStyle="bold"
-            android:textColor="#1A1A1A" />
+            android:textColor="@color/binance_text_primary" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilContrasena"
@@ -206,13 +212,15 @@
             app:boxCornerRadiusBottomStart="15dp"
             app:boxCornerRadiusTopEnd="15dp"
             app:boxCornerRadiusTopStart="15dp"
-            app:boxStrokeColor="#E0E0E0"
+            app:boxStrokeColor="@color/binance_border"
             app:boxStrokeWidthFocused="2dp"
             app:startIconDrawable="@drawable/ic_lock"
             app:startIconTint="#BDBDBD"
             app:endIconMode="password_toggle">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:textColorHint="@color/binance_text_secondary"
+                android:textColor="@color/binance_text_primary"
                 android:id="@+id/etContrasena"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -231,7 +239,7 @@
             android:text="Confirmar contraseña"
             android:textSize="21sp"
             android:textStyle="bold"
-            android:textColor="#1A1A1A" />
+            android:textColor="@color/binance_text_primary" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilConfirmarContrasena"
@@ -243,13 +251,15 @@
             app:boxCornerRadiusBottomStart="15dp"
             app:boxCornerRadiusTopEnd="15dp"
             app:boxCornerRadiusTopStart="15dp"
-            app:boxStrokeColor="#E0E0E0"
+            app:boxStrokeColor="@color/binance_border"
             app:boxStrokeWidthFocused="2dp"
             app:startIconDrawable="@drawable/ic_lock"
             app:startIconTint="#BDBDBD"
             app:endIconMode="password_toggle">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:textColorHint="@color/binance_text_secondary"
+                android:textColor="@color/binance_text_primary"
                 android:id="@+id/etConfirmarContrasena"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -271,7 +281,7 @@
                 android:id="@+id/cbTerminos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="#F5A623"
+                android:buttonTint="@color/binance_yellow"
                 android:text="Acepto los términos y condiciones"
                 android:textSize="18sp"
                 android:textColor="#444444" />
@@ -288,7 +298,7 @@
                     android:layout_height="wrap_content"
                     android:text="Términos"
                     android:textSize="18sp"
-                    android:textColor="#F5A623"
+                    android:textColor="@color/binance_yellow"
                     android:textStyle="bold" />
 
                 <TextView
@@ -304,7 +314,7 @@
                     android:layout_height="wrap_content"
                     android:text="Privacidad"
                     android:textSize="18sp"
-                    android:textColor="#F5A623"
+                    android:textColor="@color/binance_yellow"
                     android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
@@ -318,8 +328,8 @@
             android:text="Registrarme"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#F5A623"
+            android:textColor="@color/binance_text_primary"
+            android:backgroundTint="@color/binance_yellow"
             app:cornerRadius="18dp" />
 
         <!-- ── ¿Ya tienes cuenta? ── -->
@@ -336,7 +346,7 @@
                 android:layout_height="wrap_content"
                 android:text="¿Ya tienes cuenta? "
                 android:textSize="20sp"
-                android:textColor="#666666" />
+                android:textColor="@color/binance_text_secondary" />
 
             <TextView
                 android:id="@+id/tvIniciarSesion"
@@ -345,7 +355,7 @@
                 android:layout_marginTop="4dp"
                 android:text="Inicia sesión"
                 android:textSize="20sp"
-                android:textColor="#F5A623"
+                android:textColor="@color/binance_yellow"
                 android:textStyle="bold" />
         </LinearLayout>
 

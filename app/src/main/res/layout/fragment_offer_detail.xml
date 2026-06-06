@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@color/binance_bg"
     android:fillViewport="true">
 
     <LinearLayout
@@ -18,14 +18,14 @@
             android:layout_height="wrap_content"
             android:paddingVertical="8dp"
             android:text="Volver"
-            android:textColor="#1E88E5"
+            android:textColor="@color/binance_yellow"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Detalle de oferta"
-            android:textColor="#1A1A1A"
+            android:textColor="@color/binance_text_primary"
             android:textSize="22sp"
             android:textStyle="bold" />
 
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="OFR-1001"
-            android:textColor="#757575" />
+            android:textColor="@color/binance_text_secondary" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -48,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Carlos_P2P"
-                android:textColor="#1A1A1A"
+                android:textColor="@color/binance_text_primary"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -57,7 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="250 operaciones | 99% reputacion"
-                android:textColor="#666666" />
+                android:textColor="@color/binance_text_secondary" />
         </LinearLayout>
 
         <GridLayout
@@ -67,14 +67,14 @@
             android:columnCount="2"
             android:rowCount="4">
 
-            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:text="Estado" android:textColor="#757575" />
-            <TextView android:id="@+id/tvStatus" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:text="ACTIVA" android:textColor="#1A1A1A" android:textStyle="bold" />
-            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:layout_marginTop="8dp" android:text="Operacion" android:textColor="#757575" />
-            <TextView android:id="@+id/tvOperation" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:layout_marginTop="8dp" android:text="VENTA" android:textColor="#1A1A1A" android:textStyle="bold" />
-            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:layout_marginTop="8dp" android:text="Par" android:textColor="#757575" />
-            <TextView android:id="@+id/tvPair" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:layout_marginTop="8dp" android:text="USD / PEN" android:textColor="#1A1A1A" android:textStyle="bold" />
-            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:layout_marginTop="8dp" android:text="Tasa" android:textColor="#757575" />
-            <TextView android:id="@+id/tvRate" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:layout_marginTop="8dp" android:text="S/ 3.7500" android:textColor="#1E88E5" android:textStyle="bold" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:text="Estado" android:textColor="@color/binance_text_secondary" />
+            <TextView android:id="@+id/tvStatus" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:text="ACTIVA" android:textColor="@color/binance_text_primary" android:textStyle="bold" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:layout_marginTop="8dp" android:text="Operacion" android:textColor="@color/binance_text_secondary" />
+            <TextView android:id="@+id/tvOperation" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:layout_marginTop="8dp" android:text="VENTA" android:textColor="@color/binance_text_primary" android:textStyle="bold" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:layout_marginTop="8dp" android:text="Par" android:textColor="@color/binance_text_secondary" />
+            <TextView android:id="@+id/tvPair" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:layout_marginTop="8dp" android:text="USD / PEN" android:textColor="@color/binance_text_primary" android:textStyle="bold" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:layout_marginTop="8dp" android:text="Tasa" android:textColor="@color/binance_text_secondary" />
+            <TextView android:id="@+id/tvRate" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:layout_marginTop="8dp" android:text="S/ 3.7500" android:textColor="@color/binance_yellow" android:textStyle="bold" />
         </GridLayout>
 
         <TextView
@@ -83,21 +83,21 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Monto ofertado: $ 1,200.00 USD"
-            android:textColor="#1A1A1A" />
+            android:textColor="@color/binance_text_primary" />
 
         <TextView
             android:id="@+id/tvMinimum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Minimo aceptado: $ 100.00 USD"
-            android:textColor="#666666" />
+            android:textColor="@color/binance_text_secondary" />
 
         <TextView
             android:id="@+id/tvTimeLimit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="15 minutos"
-            android:textColor="#666666" />
+            android:textColor="@color/binance_text_secondary" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilAmount"
@@ -108,6 +108,8 @@
             app:boxBackgroundMode="outline">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:textColorHint="@color/binance_text_secondary"
+                android:textColor="@color/binance_text_primary"
                 android:id="@+id/etAmount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -120,7 +122,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Metodo de pago"
-            android:textColor="#1A1A1A"
+            android:textColor="@color/binance_text_primary"
             android:textStyle="bold" />
 
         <RadioGroup
@@ -137,7 +139,7 @@
             android:background="@drawable/bg_info_banner"
             android:padding="12dp"
             android:text="Los datos de pago se mostraran despues de iniciar."
-            android:textColor="#1A1A1A" />
+            android:textColor="@color/binance_text_primary" />
 
         <TextView
             android:id="@+id/tvTotalLabel"
@@ -145,14 +147,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
             android:text="Total a pagar"
-            android:textColor="#757575" />
+            android:textColor="@color/binance_text_secondary" />
 
         <TextView
             android:id="@+id/tvTotal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="S/ 0.00 PEN"
-            android:textColor="#1E88E5"
+            android:textColor="@color/binance_yellow"
             android:textSize="22sp"
             android:textStyle="bold" />
 

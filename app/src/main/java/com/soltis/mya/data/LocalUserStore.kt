@@ -16,12 +16,16 @@ data class UserProfile(
     val username: String,
     val email: String,
     val password: String,
+    val role: String = LocalUserStore.ROLE_USER,
     val phone: String = "",
     val yape: String = "",
     val plin: String = "",
     val bankCards: List<BankCard> = emptyList(),
     val balances: Map<String, Double> = emptyMap(),
-    val heldBalances: Map<String, Double> = emptyMap()
+    val heldBalances: Map<String, Double> = emptyMap(),
+    val totalRecharged: Map<String, Double> = emptyMap(),
+    val totalReleased: Map<String, Double> = emptyMap(),
+    val totalWithdrawn: Map<String, Double> = emptyMap()
 )
 
 class LocalUserStore(context: Context) {
@@ -59,8 +63,12 @@ class LocalUserStore(context: Context) {
                 username = username,
                 email = normalizedEmail,
                 password = password,
+                role = ROLE_USER,
                 balances = zeroBalances(),
-                heldBalances = zeroBalances()
+                heldBalances = zeroBalances(),
+                totalRecharged = zeroBalances(),
+                totalReleased = zeroBalances(),
+                totalWithdrawn = zeroBalances()
             )
         )
         saveUsers(users)
@@ -76,11 +84,18 @@ class LocalUserStore(context: Context) {
         return getUsers().firstOrNull { it.email.equals(email, ignoreCase = true) }
     }
 
+    fun getAllUsers(): List<UserProfile> = getUsers().sortedBy { it.username.lowercase() }
+
     fun updateCurrentUser(updated: UserProfile) {
         val currentEmail = prefs.getString(KEY_CURRENT_EMAIL, null) ?: return
         val users = getUsers().map { user ->
             if (user.email.equals(currentEmail, ignoreCase = true)) {
-                updated.copy(email = currentEmail, password = user.password, username = updated.username.ifBlank { user.username })
+                updated.copy(
+                    email = currentEmail,
+                    password = user.password,
+                    username = updated.username.ifBlank { user.username },
+                    role = user.role
+                )
             } else {
                 user
             }
@@ -88,9 +103,61 @@ class LocalUserStore(context: Context) {
         saveUsers(users)
     }
 
-    fun updateCurrentWallet(balances: Map<String, Double>, heldBalances: Map<String, Double>) {
+    fun updateCurrentWallet(
+        balances: Map<String, Double>,
+        heldBalances: Map<String, Double>,
+        totalRecharged: Map<String, Double>,
+        totalReleased: Map<String, Double>,
+        totalWithdrawn: Map<String, Double>
+    ) {
         val current = getCurrentUser() ?: return
-        updateCurrentUser(current.copy(balances = balances, heldBalances = heldBalances))
+        updateCurrentUser(
+            current.copy(
+                balances = balances,
+                heldBalances = heldBalances,
+                totalRecharged = totalRecharged,
+                totalReleased = totalReleased,
+                totalWithdrawn = totalWithdrawn
+            )
+        )
+    }
+
+    fun transferHeldToBuyer(sellerEmail: String, buyerEmail: String, currency: String, amount: Double): Boolean {
+        if (amount <= 0) return false
+        val users = getUsers().toMutableList()
+        val buyerIndex = users.indexOfFirst { it.email.equals(buyerEmail, ignoreCase = true) }
+        if (buyerIndex < 0) return false
+
+        val sellerIndex = users.indexOfFirst { it.email.equals(sellerEmail, ignoreCase = true) }
+        if (sellerIndex >= 0) {
+            val seller = users[sellerIndex]
+            val held = seller.heldBalances[currency] ?: 0.0
+            if (held < amount) return false
+            users[sellerIndex] = seller.copy(heldBalances = seller.heldBalances.plusAmount(currency, -amount))
+        }
+
+        val buyer = users[buyerIndex]
+        users[buyerIndex] = buyer.copy(balances = buyer.balances.plusAmount(currency, amount))
+        saveUsers(users)
+        return true
+    }
+
+    fun returnHeldToSeller(sellerEmail: String, currency: String, amount: Double): Boolean {
+        if (amount <= 0) return false
+        val users = getUsers().toMutableList()
+        val sellerIndex = users.indexOfFirst { it.email.equals(sellerEmail, ignoreCase = true) }
+        if (sellerIndex < 0) return false
+
+        val seller = users[sellerIndex]
+        val held = seller.heldBalances[currency] ?: 0.0
+        if (held < amount) return false
+
+        users[sellerIndex] = seller.copy(
+            balances = seller.balances.plusAmount(currency, amount),
+            heldBalances = seller.heldBalances.plusAmount(currency, -amount)
+        )
+        saveUsers(users)
+        return true
     }
 
     fun maskAccount(value: String): String {
@@ -107,50 +174,67 @@ class LocalUserStore(context: Context) {
     }
 
     private fun seedDemoUsersIfNeeded() {
-        if (prefs.getBoolean(KEY_SEEDED, false) && prefs.getString(KEY_USERS, "[]") != "[]") return
-
-        saveUsers(
-            listOf(
-                UserProfile(
-                    fullName = "Kevin Quispe",
-                    username = "kevinq",
-                    email = "kevin.quispe@email.com",
-                    password = "12345678",
-                    phone = "+51 987 654 321",
-                    yape = "987654321",
-                    plin = "987654321",
-                    bankCards = listOf(
-                        BankCard(
-                            bank = "BCP",
-                            type = "Cuenta de ahorros",
-                            account = "19112345678912",
-                            cci = "00219100123456789012"
-                        )
-                    ),
-                    balances = mapOf("PEN" to 8240.50, "USD" to 2150.00, "EUR" to 66.28),
-                    heldBalances = mapOf("PEN" to 390.00, "USD" to 45.00, "EUR" to 0.0)
+        val current = getUsers()
+        val demoUsers = listOf(
+            UserProfile(
+                fullName = "Kevin Quispe",
+                username = "kevinq",
+                email = "kevin.quispe@email.com",
+                password = "12345678",
+                phone = "+51 987 654 321",
+                yape = "987654321",
+                plin = "987654321",
+                bankCards = listOf(
+                    BankCard(
+                        bank = "BCP",
+                        type = "Cuenta de ahorros",
+                        account = "19112345678912",
+                        cci = "00219100123456789012"
+                    )
                 ),
-                UserProfile(
-                    fullName = "Ana Torres",
-                    username = "anatorres",
-                    email = "ana.torres@email.com",
-                    password = "12345678",
-                    phone = "+51 955 120 888",
-                    yape = "955120888",
-                    plin = "955120888",
-                    bankCards = listOf(
-                        BankCard(
-                            bank = "BBVA",
-                            type = "Cuenta corriente",
-                            account = "001112223333444455",
-                            cci = "01100111222333344455"
-                        )
-                    ),
-                    balances = mapOf("PEN" to 1200.00, "USD" to 350.00, "EUR" to 0.0),
-                    heldBalances = zeroBalances()
-                )
+                balances = mapOf("PEN" to 8240.50, "USD" to 2150.00, "EUR" to 66.28),
+                heldBalances = mapOf("PEN" to 390.00, "USD" to 45.00, "EUR" to 0.0),
+                totalRecharged = zeroBalances(),
+                totalReleased = zeroBalances(),
+                totalWithdrawn = zeroBalances()
+            ),
+            UserProfile(
+                fullName = "Ana Torres",
+                username = "anatorres",
+                email = "ana.torres@email.com",
+                password = "12345678",
+                phone = "+51 955 120 888",
+                yape = "955120888",
+                plin = "955120888",
+                bankCards = listOf(
+                    BankCard(
+                        bank = "BBVA",
+                        type = "Cuenta corriente",
+                        account = "001112223333444455",
+                        cci = "01100111222333344455"
+                    )
+                ),
+                balances = mapOf("PEN" to 1200.00, "USD" to 350.00, "EUR" to 0.0),
+                heldBalances = zeroBalances(),
+                totalRecharged = zeroBalances(),
+                totalReleased = zeroBalances(),
+                totalWithdrawn = zeroBalances()
+            ),
+            UserProfile(
+                fullName = "Administrador P2P",
+                username = "admin",
+                email = "admin@p2p.com",
+                password = "12345678",
+                role = ROLE_ADMIN,
+                balances = zeroBalances(),
+                heldBalances = zeroBalances(),
+                totalRecharged = zeroBalances(),
+                totalReleased = zeroBalances(),
+                totalWithdrawn = zeroBalances()
             )
         )
+        val missing = demoUsers.filter { demo -> current.none { it.email.equals(demo.email, ignoreCase = true) } }
+        if (missing.isNotEmpty()) saveUsers(current + missing)
         prefs.edit().putBoolean(KEY_SEEDED, true).apply()
     }
 
@@ -174,6 +258,7 @@ class LocalUserStore(context: Context) {
             .put("username", username)
             .put("email", email)
             .put("password", password)
+            .put("role", role)
             .put("phone", phone)
             .put("yape", yape)
             .put("plin", plin)
@@ -190,6 +275,9 @@ class LocalUserStore(context: Context) {
             })
             .put("balances", balances.toJsonObject())
             .put("heldBalances", heldBalances.toJsonObject())
+            .put("totalRecharged", totalRecharged.toJsonObject())
+            .put("totalReleased", totalReleased.toJsonObject())
+            .put("totalWithdrawn", totalWithdrawn.toJsonObject())
     }
 
     private fun JSONObject.toUserProfile(): UserProfile {
@@ -198,12 +286,16 @@ class LocalUserStore(context: Context) {
             username = optString("username"),
             email = optString("email"),
             password = optString("password"),
+            role = optString("role", ROLE_USER),
             phone = optString("phone"),
             yape = optString("yape"),
             plin = optString("plin"),
             bankCards = optJSONArray("bankCards").toBankCards(),
             balances = optJSONObject("balances").toBalanceMap(),
-            heldBalances = optJSONObject("heldBalances").toBalanceMap()
+            heldBalances = optJSONObject("heldBalances").toBalanceMap(),
+            totalRecharged = optJSONObject("totalRecharged").toBalanceMap(),
+            totalReleased = optJSONObject("totalReleased").toBalanceMap(),
+            totalWithdrawn = optJSONObject("totalWithdrawn").toBalanceMap()
         )
     }
 
@@ -235,12 +327,20 @@ class LocalUserStore(context: Context) {
         )
     }
 
+    private fun Map<String, Double>.plusAmount(currency: String, amount: Double): Map<String, Double> {
+        val updated = toMutableMap()
+        updated[currency] = ((updated[currency] ?: 0.0) + amount).coerceAtLeast(0.0)
+        return updated
+    }
+
     sealed class RegisterResult {
         data object Success : RegisterResult()
         data object EmailAlreadyExists : RegisterResult()
     }
 
     companion object {
+        const val ROLE_USER = "USER"
+        const val ROLE_ADMIN = "ADMIN"
         private const val PREFS_NAME = "p2p_local_users"
         private const val KEY_USERS = "users"
         private const val KEY_CURRENT_EMAIL = "current_email"

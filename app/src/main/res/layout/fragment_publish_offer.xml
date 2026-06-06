@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@color/binance_bg"
     android:fillViewport="true">
 
     <LinearLayout
@@ -22,7 +22,7 @@
             android:paddingEnd="16dp"
             android:paddingTop="52dp"
             android:paddingBottom="8dp"
-            android:background="#FFFFFF">
+            android:background="@color/binance_bg">
 
             <ImageButton
                 android:id="@+id/btnBack"
@@ -39,33 +39,12 @@
                 android:text="Publicar oferta"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="#1A1A1A"
+                android:textColor="@color/binance_text_primary"
                 android:gravity="center" />
 
-            <LinearLayout
-                android:id="@+id/layoutLang"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:background="@drawable/bg_lang_pill">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="🌐 ES"
-                    android:textSize="12sp"
-                    android:textColor="#1A1A1A" />
-
-                <ImageView
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
-                    android:layout_marginStart="2dp"
-                    android:src="@drawable/ic_arrow_drop_down"
-                    android:contentDescription="Idioma" />
-            </LinearLayout>
+            <View
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
         </LinearLayout>
 
         <!-- ══ LOGO ══ -->
@@ -95,7 +74,7 @@
                     android:text="P2P"
                     android:textStyle="bold"
                     android:textSize="14sp"
-                    android:textColor="#1A1A1A" />
+                    android:textColor="@color/binance_text_primary" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -103,7 +82,7 @@
                     android:text="DIVISAS"
                     android:textSize="8sp"
                     android:letterSpacing="0.12"
-                    android:textColor="#1A1A1A" />
+                    android:textColor="@color/binance_text_primary" />
             </LinearLayout>
         </LinearLayout>
 
@@ -133,7 +112,7 @@
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:gravity="center"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/binance_text_primary"
                     android:background="@drawable/bg_tab_selected" />
 
                 <TextView
@@ -144,7 +123,7 @@
                     android:text="Venta"
                     android:textSize="14sp"
                     android:gravity="center"
-                    android:textColor="#888888"
+                    android:textColor="@color/binance_text_secondary"
                     android:background="@android:color/transparent" />
             </LinearLayout>
         </LinearLayout>
@@ -158,7 +137,7 @@
             android:text="Par de divisas"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:textColor="#1A1A1A" />
+            android:textColor="@color/binance_text_primary" />
 
         <!-- Currency pair selector -->
         <LinearLayout
@@ -203,7 +182,7 @@
                         android:text="USD"
                         android:textSize="14sp"
                         android:textStyle="bold"
-                        android:textColor="#1A1A1A" />
+                        android:textColor="@color/binance_text_primary" />
 
                     <TextView
                         android:id="@+id/tvCurrencyFromName"
@@ -211,7 +190,7 @@
                         android:layout_height="wrap_content"
                         android:text="Dólares"
                         android:textSize="11sp"
-                        android:textColor="#888888" />
+                        android:textColor="@color/binance_text_secondary" />
                 </LinearLayout>
 
                 <ImageView
@@ -230,7 +209,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:src="@drawable/ic_swap"
-                app:tint="#F5A623"
+                app:tint="@color/binance_yellow"
                 android:contentDescription="Intercambiar" />
 
             <!-- To currency -->
@@ -266,7 +245,7 @@
                         android:text="PEN"
                         android:textSize="14sp"
                         android:textStyle="bold"
-                        android:textColor="#1A1A1A" />
+                        android:textColor="@color/binance_text_primary" />
 
                     <TextView
                         android:id="@+id/tvCurrencyToName"
@@ -274,7 +253,7 @@
                         android:layout_height="wrap_content"
                         android:text="Soles"
                         android:textSize="11sp"
-                        android:textColor="#888888" />
+                        android:textColor="@color/binance_text_secondary" />
                 </LinearLayout>
 
                 <ImageView
@@ -295,7 +274,7 @@
             android:text="Monto a ofertar"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:textColor="#1A1A1A" />
+            android:textColor="@color/binance_text_primary" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilMonto"
@@ -309,13 +288,15 @@
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
-            app:boxStrokeColor="#E0E0E0"
+            app:boxStrokeColor="@color/binance_border"
             app:prefixText="S/"
-            app:prefixTextColor="#1A1A1A"
+            app:prefixTextColor="@color/binance_text_primary"
             app:suffixText="0.00 PEN"
-            app:suffixTextColor="#AAAAAA">
+            app:suffixTextColor="@color/binance_text_secondary">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:textColorHint="@color/binance_text_secondary"
+                android:textColor="@color/binance_text_primary"
                 android:id="@+id/etMonto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -332,7 +313,7 @@
             android:layout_marginTop="3dp"
             android:text="Monto mínimo: S/ 10.00 · Máximo: S/ 90,000.00"
             android:textSize="10sp"
-            android:textColor="#AAAAAA" />
+            android:textColor="@color/binance_text_secondary" />
 
         <!-- ══ TIPO DE CAMBIO ══ -->
         <TextView
@@ -343,7 +324,7 @@
             android:text="Tipo de cambio"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:textColor="#1A1A1A" />
+            android:textColor="@color/binance_text_primary" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilTipoCambio"
@@ -357,13 +338,15 @@
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
-            app:boxStrokeColor="#E0E0E0"
+            app:boxStrokeColor="@color/binance_border"
             app:prefixText="S/"
-            app:prefixTextColor="#1A1A1A"
+            app:prefixTextColor="@color/binance_text_primary"
             app:suffixText="0.0000 PEN/USD"
-            app:suffixTextColor="#AAAAAA">
+            app:suffixTextColor="@color/binance_text_secondary">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:textColorHint="@color/binance_text_secondary"
+                android:textColor="@color/binance_text_primary"
                 android:id="@+id/etTipoCambio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -383,7 +366,7 @@
             android:text="Recibirás: 0.00 PEN"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:textColor="#2E7D32"
+            android:textColor="@color/binance_green"
             android:visibility="gone" />
 
         <!-- ══ LÍMITES ══ -->
@@ -395,7 +378,7 @@
             android:text="Límite mínimo (opcional)"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:textColor="#1A1A1A" />
+            android:textColor="@color/binance_text_primary" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -417,11 +400,13 @@
                 app:boxCornerRadiusBottomStart="10dp"
                 app:boxCornerRadiusTopEnd="10dp"
                 app:boxCornerRadiusTopStart="10dp"
-                app:boxStrokeColor="#E0E0E0"
+                app:boxStrokeColor="@color/binance_border"
                 app:prefixText="S/"
-                app:prefixTextColor="#1A1A1A">
+                app:prefixTextColor="@color/binance_text_primary">
 
                 <com.google.android.material.textfield.TextInputEditText
+                android:textColorHint="@color/binance_text_secondary"
+                android:textColor="@color/binance_text_primary"
                     android:id="@+id/etLimiteMin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -441,11 +426,13 @@
                 app:boxCornerRadiusBottomStart="10dp"
                 app:boxCornerRadiusTopEnd="10dp"
                 app:boxCornerRadiusTopStart="10dp"
-                app:boxStrokeColor="#E0E0E0"
+                app:boxStrokeColor="@color/binance_border"
                 app:prefixText="S/"
-                app:prefixTextColor="#1A1A1A">
+                app:prefixTextColor="@color/binance_text_primary">
 
                 <com.google.android.material.textfield.TextInputEditText
+                android:textColorHint="@color/binance_text_secondary"
+                android:textColor="@color/binance_text_primary"
                     android:id="@+id/etLimiteMax"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -464,7 +451,7 @@
             android:text="Métodos de pago"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:textColor="#1A1A1A" />
+            android:textColor="@color/binance_text_primary" />
 
         <GridLayout
             android:layout_width="match_parent"
@@ -503,7 +490,7 @@
                     android:text="Yape"
                     android:textSize="13sp"
                     android:textStyle="bold"
-                    android:textColor="#1A1A1A" />
+                    android:textColor="@color/binance_text_primary" />
             </LinearLayout>
 
             <!-- Plin -->
@@ -531,7 +518,7 @@
                     android:layout_marginStart="8dp"
                     android:text="Plin"
                     android:textSize="13sp"
-                    android:textColor="#1A1A1A" />
+                    android:textColor="@color/binance_text_primary" />
             </LinearLayout>
 
             <!-- Transferencia bancaria -->
@@ -559,7 +546,7 @@
                     android:layout_marginStart="8dp"
                     android:text="Transferencia bancaria"
                     android:textSize="11sp"
-                    android:textColor="#1A1A1A" />
+                    android:textColor="@color/binance_text_primary" />
             </LinearLayout>
 
             <!-- Wallet interno -->
@@ -586,7 +573,7 @@
                     android:layout_marginStart="8dp"
                     android:text="Wallet interno"
                     android:textSize="12sp"
-                    android:textColor="#1A1A1A" />
+                    android:textColor="@color/binance_text_primary" />
             </LinearLayout>
 
         </GridLayout>
@@ -600,7 +587,7 @@
             android:text="Términos de la oferta (opcional)"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:textColor="#1A1A1A" />
+            android:textColor="@color/binance_text_primary" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilTerminos"
@@ -614,11 +601,13 @@
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
-            app:boxStrokeColor="#E0E0E0"
+            app:boxStrokeColor="@color/binance_border"
             app:counterEnabled="true"
             app:counterMaxLength="250">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:textColorHint="@color/binance_text_secondary"
+                android:textColor="@color/binance_text_primary"
                 android:id="@+id/etTerminos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -646,7 +635,7 @@
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:src="@drawable/ic_info"
-                app:tint="#F5A623"
+                app:tint="@color/binance_yellow"
                 android:layout_marginEnd="8dp"
                 android:layout_marginTop="2dp"
                 android:contentDescription="Info" />
@@ -658,7 +647,7 @@
                 android:layout_weight="1"
                 android:text="Solo si lo posees: S/ 1,345.78 PEN\nEse es el saldo que podrás usar para completar compras"
                 android:textSize="12sp"
-                android:textColor="#666666" />
+                android:textColor="@color/binance_text_secondary" />
         </LinearLayout>
 
         <!-- ══ PUBLICAR BUTTON ══ -->
@@ -672,8 +661,8 @@
             android:text="Publicar oferta"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#F5A623"
+            android:textColor="@color/binance_text_primary"
+            android:backgroundTint="@color/binance_yellow"
             app:cornerRadius="12dp" />
 
     </LinearLayout>

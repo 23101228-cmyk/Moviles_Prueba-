@@ -24,7 +24,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setupClickListeners() {
         binding.tvOlvideContrasena.setOnClickListener {
-            Toast.makeText(this, "Recuperar contrasena", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Recuperando contrasena, verifique su email", Toast.LENGTH_LONG).show()
         }
 
         binding.btnIngresar.setOnClickListener {
@@ -32,8 +32,14 @@ class LoginActivity : AppCompatActivity() {
                 val correo = binding.etCorreo.text.toString().trim()
                 val password = binding.etContrasena.text.toString()
                 if (userStore.login(correo, password)) {
+                    val currentUser = userStore.getCurrentUser()
                     Toast.makeText(this, "Iniciando sesion...", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this, com.soltis.mya.MainActivity::class.java))
+                    val destination = if (currentUser?.role == LocalUserStore.ROLE_ADMIN) {
+                        com.soltis.mya.admin.AdminActivity::class.java
+                    } else {
+                        com.soltis.mya.MainActivity::class.java
+                    }
+                    startActivity(Intent(this, destination))
                     finish()
                 } else {
                     binding.tilContrasena.error = "Correo o contrasena incorrectos"

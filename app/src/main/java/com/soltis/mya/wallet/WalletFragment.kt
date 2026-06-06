@@ -107,7 +107,10 @@ class WalletFragment : Fragment() {
         item.tvCurrencyName.text = name
         item.tvCurrencyAmount.text = "$symbol ${"%,.2f".format(amount)}"
         item.tvCurrencyAmountAlt.text = "Retenido: $symbol ${"%,.2f".format(heldAmount)}"
-        item.tvCurrencyAmountAlt.setTextColor(if (heldAmount > 0) 0xFFE67E22.toInt() else 0xFF757575.toInt())
+        item.tvCurrencyCode.setTextColor(0xFFEAECEF.toInt())
+        item.tvCurrencyName.setTextColor(0xFFB7BDC6.toInt())
+        item.tvCurrencyAmount.setTextColor(0xFFEAECEF.toInt())
+        item.tvCurrencyAmountAlt.setTextColor(if (heldAmount > 0) 0xFFF0B90B.toInt() else 0xFFB7BDC6.toInt())
     }
 
     private fun setupMovements() {
@@ -158,7 +161,7 @@ class MovementAdapter(private val items: List<Movement>) :
             tvMovType.text = item.type
             tvMovDetail.text = item.detail
             tvMovAmount.text = item.amount
-            tvMovAmount.setTextColor(if (item.isPositive) 0xFF27AE60.toInt() else 0xFFE74C3C.toInt())
+            tvMovAmount.setTextColor(if (item.isPositive) 0xFF0ECB81.toInt() else 0xFFF6465D.toInt())
         }
     }
 

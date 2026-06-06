@@ -1,8 +1,13 @@
 package com.soltis.mya.register
 
 import android.os.Bundle
+import android.view.Gravity
+import android.widget.LinearLayout
+import android.widget.ScrollView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.soltis.mya.data.LocalUserStore
@@ -129,11 +134,92 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun setupTerminosText() {
         binding.tvLinkTerminos.setOnClickListener {
-            Toast.makeText(this, "Abriendo terminos y condiciones...", Toast.LENGTH_SHORT).show()
+            showPolicyDialog(
+                title = "Terminos y condiciones",
+                items = listOf(
+                    "El usuario debe registrar datos reales y verificables.",
+                    "Las ofertas publicadas deben tener montos y tasas claras.",
+                    "El usuario debe contar con saldo suficiente antes de vender.",
+                    "Los pagos externos deben realizarse solo al titular registrado.",
+                    "Todo comprobante adjunto debe corresponder a la operacion.",
+                    "Las operaciones iniciadas pueden pasar a revision si hay disputa.",
+                    "El administrador puede resolver disputas de forma simulada.",
+                    "Las ofertas se cierran al iniciar una operacion.",
+                    "El wallet es interno y se usa con fines academicos.",
+                    "La plataforma no realiza cobros reales."
+                )
+            )
         }
 
         binding.tvLinkPrivacidad.setOnClickListener {
-            Toast.makeText(this, "Abriendo politica de privacidad...", Toast.LENGTH_SHORT).show()
+            showPolicyDialog(
+                title = "Privacidad",
+                items = listOf(
+                    "Los datos personales se usan para identificar al usuario dentro de la app.",
+                    "El correo se usa para iniciar sesion y simular recuperacion de cuenta.",
+                    "Los medios de pago se muestran de forma parcial cuando corresponde.",
+                    "El CCI y las cuentas bancarias se enmascaran para proteger al usuario.",
+                    "Los comprobantes se registran solo como simulacion academica.",
+                    "Las operaciones y disputas quedan disponibles para revision del administrador.",
+                    "No se comparte informacion con servicios externos.",
+                    "No se procesan pagos reales desde esta aplicacion.",
+                    "Los datos se guardan localmente para la demostracion del proyecto.",
+                    "El usuario puede editar sus datos desde la pantalla Perfil."
+                )
+            )
         }
     }
+
+    private fun showPolicyDialog(title: String, items: List<String>) {
+        val container = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(dp(20), dp(14), dp(20), dp(12))
+        }
+
+        val titleView = TextView(this).apply {
+            text = title
+            textSize = 22f
+            setTextColor(0xFFEAECEF.toInt())
+            setTypeface(typeface, android.graphics.Typeface.BOLD)
+            gravity = Gravity.CENTER
+            setPadding(0, 0, 0, dp(12))
+        }
+
+        val rulesView = TextView(this).apply {
+            text = items.mapIndexed { index, item -> "${index + 1}. $item" }.joinToString("\n\n")
+            textSize = 15f
+            setTextColor(0xFF444444.toInt())
+            setLineSpacing(2f, 1.0f)
+        }
+
+        val scroll = ScrollView(this).apply {
+            addView(rulesView)
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                dp(360)
+            )
+        }
+
+        val dialog = androidx.appcompat.app.AlertDialog.Builder(this)
+            .setView(container)
+            .create()
+
+        val backButton = MaterialButton(this).apply {
+            text = "Regresar"
+            setTextColor(0xFFFFFFFF.toInt())
+            setBackgroundColor(0xFFF0B90B.toInt())
+            setOnClickListener { dialog.dismiss() }
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                dp(52)
+            ).apply { topMargin = dp(16) }
+        }
+
+        container.addView(titleView)
+        container.addView(scroll)
+        container.addView(backButton)
+        dialog.show()
+    }
+
+    private fun dp(value: Int): Int = (value * resources.displayMetrics.density).toInt()
 }

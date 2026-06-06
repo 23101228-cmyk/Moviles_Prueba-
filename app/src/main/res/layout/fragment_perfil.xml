@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@color/binance_bg"
     android:fillViewport="true">
 
     <LinearLayout
@@ -16,7 +16,7 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#263238"
+            android:backgroundTint="@color/binance_surface"
             app:cardCornerRadius="18dp"
             app:cardElevation="4dp"
             app:strokeWidth="0dp">
@@ -36,7 +36,7 @@
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="72dp"
                         android:layout_height="72dp"
-                        android:backgroundTint="#FFFFFF"
+                        android:backgroundTint="@color/binance_text_primary"
                         app:cardCornerRadius="36dp"
                         app:cardElevation="0dp">
 
@@ -45,7 +45,7 @@
                             android:layout_height="match_parent"
                             android:padding="16dp"
                             android:src="@drawable/ic_person"
-                            app:tint="#F5A623" />
+                            app:tint="@color/binance_yellow" />
                     </com.google.android.material.card.MaterialCardView>
 
                     <LinearLayout
@@ -60,7 +60,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Usuario P2P"
-                            android:textColor="#FFFFFF"
+                            android:textColor="@color/binance_text_primary"
                             android:textSize="22sp"
                             android:textStyle="bold" />
 
@@ -98,10 +98,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="44dp"
                         android:text="Editar"
-                        android:textColor="#F5A623"
+                        android:textColor="@color/binance_yellow"
                         android:textStyle="bold"
                         app:icon="@drawable/ic_person"
-                        app:iconTint="#F5A623" />
+                        app:iconTint="@color/binance_yellow" />
                 </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -111,7 +111,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="22dp"
             android:text="Datos personales"
-            android:textColor="#1A1A1A"
+            android:textColor="@color/binance_text_primary"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -134,7 +134,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Nombre completo"
-                    android:textColor="#757575"
+                    android:textColor="@color/binance_text_secondary"
                     android:textSize="13sp" />
 
                 <TextView
@@ -143,20 +143,21 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="Usuario de prueba"
-                    android:textColor="#1A1A1A"
+                    android:textColor="@color/binance_text_primary"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <EditText
+                    android:textColorHint="@color/binance_text_secondary"
                     android:id="@+id/etFullNameInline"
                     android:layout_width="match_parent"
                     android:layout_height="44dp"
                     android:layout_marginTop="4dp"
-                    android:backgroundTint="#F5A623"
+                    android:backgroundTint="@color/binance_yellow"
                     android:hint="Nombre legal"
                     android:inputType="textPersonName"
                     android:singleLine="true"
-                    android:textColor="#1A1A1A"
+                    android:textColor="@color/binance_text_primary"
                     android:textSize="16sp"
                     android:visibility="gone" />
 
@@ -170,7 +171,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Celular"
-                    android:textColor="#757575"
+                    android:textColor="@color/binance_text_secondary"
                     android:textSize="13sp" />
 
                 <TextView
@@ -179,20 +180,21 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="+51 999 888 777"
-                    android:textColor="#1A1A1A"
+                    android:textColor="@color/binance_text_primary"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <EditText
+                    android:textColorHint="@color/binance_text_secondary"
                     android:id="@+id/etPhoneInline"
                     android:layout_width="match_parent"
                     android:layout_height="44dp"
                     android:layout_marginTop="4dp"
-                    android:backgroundTint="#F5A623"
+                    android:backgroundTint="@color/binance_yellow"
                     android:hint="Telefono"
                     android:inputType="phone"
                     android:singleLine="true"
-                    android:textColor="#1A1A1A"
+                    android:textColor="@color/binance_text_primary"
                     android:textSize="16sp"
                     android:visibility="gone" />
             </LinearLayout>
@@ -203,7 +205,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="22dp"
             android:text="Medios de pago"
-            android:textColor="#1A1A1A"
+            android:textColor="@color/binance_text_primary"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -259,6 +261,7 @@
                         android:textSize="12sp" />
 
                     <EditText
+                    android:textColorHint="@color/binance_text_secondary"
                         android:id="@+id/etYapeInline"
                         android:layout_width="match_parent"
                         android:layout_height="42dp"
@@ -320,6 +323,7 @@
                         android:textSize="12sp" />
 
                     <EditText
+                    android:textColorHint="@color/binance_text_secondary"
                         android:id="@+id/etPlinInline"
                         android:layout_width="match_parent"
                         android:layout_height="42dp"
@@ -349,20 +353,20 @@
             android:layout_height="54dp"
             android:layout_marginTop="12dp"
             android:text="Agregar banco o CCI"
-            android:textColor="#263238"
+            android:textColor="@color/binance_text_primary"
             android:textStyle="bold"
             app:backgroundTint="#FFF3E0"
             app:cornerRadius="12dp"
             app:icon="@drawable/ic_bank_transfer"
             app:iconGravity="textStart"
-            app:iconTint="#F5A623" />
+            app:iconTint="@color/binance_yellow" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="22dp"
             android:text="Validaciones"
-            android:textColor="#1A1A1A"
+            android:textColor="@color/binance_text_primary"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -414,7 +418,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
                         android:text="Yape, Plin, banco y CCI listos para operar."
-                        android:textColor="#2E7D32"
+                        android:textColor="@color/binance_green"
                         android:textSize="13sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -426,13 +430,13 @@
             android:layout_height="56dp"
             android:layout_marginTop="24dp"
             android:text="Guardar perfil"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/binance_text_primary"
             android:textStyle="bold"
-            app:backgroundTint="#F5A623"
+            app:backgroundTint="@color/binance_yellow"
             app:cornerRadius="12dp"
             app:icon="@drawable/ic_person"
             app:iconGravity="textStart"
-            app:iconTint="#FFFFFF" />
+            app:iconTint="@color/binance_text_primary" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnLogout"
@@ -441,7 +445,7 @@
             android:layout_height="56dp"
             android:layout_marginTop="12dp"
             android:text="Cerrar sesión"
-            android:textColor="#C62828"
+            android:textColor="@color/binance_red"
             android:textStyle="bold"
             app:cornerRadius="12dp"
             app:icon="@drawable/ic_lock"

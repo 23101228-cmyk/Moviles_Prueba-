@@ -15,4 +15,16 @@
     <color name="text_secondary">#666666</color>
     <color name="text_hint">#BDBDBD</color>
     <color name="stroke_default">#E0E0E0</color>
+
+    <!-- Binance-inspired dark palette -->
+    <color name="binance_bg">#0B0E11</color>
+    <color name="binance_surface">#181A20</color>
+    <color name="binance_surface_2">#1E2329</color>
+    <color name="binance_yellow">#F0B90B</color>
+    <color name="binance_yellow_dark">#C99400</color>
+    <color name="binance_text_primary">#EAECEF</color>
+    <color name="binance_text_secondary">#B7BDC6</color>
+    <color name="binance_border">#2B3139</color>
+    <color name="binance_green">#0ECB81</color>
+    <color name="binance_red">#F6465D</color>
 </resources>
