@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.soltis.mya.R
+import com.soltis.mya.data.LocalUserStore
 import com.soltis.mya.databinding.FragmentWithdrawBinding
 
 class WithdrawFragment : Fragment() {
@@ -18,6 +19,7 @@ class WithdrawFragment : Fragment() {
     private var _binding: FragmentWithdrawBinding? = null
     private val binding get() = _binding!!
     private val viewModel: WalletViewModel by activityViewModels()
+    private lateinit var userStore: LocalUserStore
 
     private var selectedCurrency = "PEN"
 
@@ -28,14 +30,36 @@ class WithdrawFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        userStore = LocalUserStore(requireContext())
+        viewModel.initialize(requireContext())
 
         setupCurrencyChips()
         setupAmountWatcher()
         setupClickListeners()
+        setupDestinationSuggestion()
 
         viewModel.balances.observe(viewLifecycleOwner) { updateSummary() }
         viewModel.heldBalances.observe(viewLifecycleOwner) { updateSummary() }
         selectCurrency("PEN")
+    }
+
+    private fun setupDestinationSuggestion() {
+        val user = userStore.getCurrentUser() ?: return
+        val destinations = mutableListOf<String>()
+        if (user.yape.isNotBlank()) destinations.add("Yape ${user.yape}")
+        if (user.plin.isNotBlank()) destinations.add("Plin ${user.plin}")
+        user.bankCards.firstOrNull()?.let { card ->
+            destinations.add("${card.bank} CCI ${userStore.maskCci(card.cci)}")
+        }
+
+        if (destinations.isNotEmpty()) {
+            binding.tilDestino.helperText = "Destinos de tu perfil: ${destinations.joinToString(" | ")}"
+            if (binding.etDestino.text.isNullOrBlank()) {
+                binding.etDestino.setText(destinations.first())
+            }
+        } else {
+            binding.tilDestino.helperText = "Completa tus medios de pago en Perfil para retirar con mayor detalle."
+        }
     }
 
     private fun setupCurrencyChips() {

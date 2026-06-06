@@ -13,6 +13,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.soltis.mya.R
+import com.soltis.mya.data.LocalOfferStore
+import com.soltis.mya.data.LocalUserStore
+import com.soltis.mya.data.P2pOffer
 import com.soltis.mya.databinding.FragmentPublishOfferBinding
 import com.soltis.mya.wallet.WalletViewModel
 import java.util.Locale
@@ -21,8 +24,9 @@ class PublishOfferFragment : Fragment() {
 
     private var _binding: FragmentPublishOfferBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: OfferViewModel by activityViewModels()
     private val walletViewModel: WalletViewModel by activityViewModels()
+    private lateinit var offerStore: LocalOfferStore
+    private lateinit var userStore: LocalUserStore
 
     private var isBuyMode = true
     private var selectedCurrencyFrom = "USD"
@@ -57,6 +61,9 @@ class PublishOfferFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        walletViewModel.initialize(requireContext())
+        offerStore = LocalOfferStore(requireContext())
+        userStore = LocalUserStore(requireContext())
 
         setupToggle()
         setupCurrencySelectors()
@@ -278,15 +285,31 @@ class PublishOfferFragment : Fragment() {
         fromInfo: CurrencyInfo,
         toInfo: CurrencyInfo
     ) {
-        val newOffer = MyOffer(
+        val currentUser = userStore.getCurrentUser()
+        if (currentUser == null) {
+            Toast.makeText(context, "Inicia sesion para publicar ofertas", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val minLimit = parseAmount(binding.etLimiteMin.text?.toString()) ?: monto
+        val maxLimit = parseAmount(binding.etLimiteMax.text?.toString()) ?: monto
+
+        val newOffer = P2pOffer(
+            id = offerStore.nextOfferId(),
+            ownerEmail = currentUser.email,
+            ownerName = currentUser.username.ifBlank { currentUser.fullName },
             type = mode,
-            asset = fromInfo.code,
-            amount = "${fromInfo.symbol} ${formatNumber(monto, 2)}",
-            price = "${toInfo.symbol} ${formatNumber(tipoCambio, 4)}",
-            status = "ACTIVA"
+            fromCurrency = fromInfo.code,
+            toCurrency = toInfo.code,
+            amount = monto,
+            rate = tipoCambio,
+            minAmount = minLimit,
+            maxAmount = maxLimit,
+            paymentMethods = selectedPaymentMethods.toList(),
+            terms = binding.etTerminos.text?.toString()?.trim().orEmpty()
         )
 
-        viewModel.addOffer(newOffer)
+        offerStore.addOffer(newOffer)
 
         if (isBuyMode) {
             walletViewModel.registerOfferImpact("COMPRA", toInfo.code, monto * tipoCambio)

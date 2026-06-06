@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import com.soltis.mya.R
+import com.soltis.mya.data.LocalOfferStore
+import com.soltis.mya.data.P2pOffer
 import com.soltis.mya.databinding.FragmentMercadoBinding
 import com.soltis.mya.databinding.ItemMarketOfferBinding
 
@@ -54,6 +56,7 @@ class MercadoFragment : Fragment() {
     private var selectedCurrency = "TODAS"
     private var selectedPayment = "TODOS"
     private var minReputation = 0
+    private lateinit var offerStore: LocalOfferStore
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentMercadoBinding.inflate(inflater, container, false)
@@ -62,10 +65,19 @@ class MercadoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        offerStore = LocalOfferStore(requireContext())
         setupList()
         setupOperationTabs()
         setupFilters()
+        binding.btnMisOperaciones.setOnClickListener {
+            findNavController().navigate(R.id.action_nav_mercado_to_operations)
+        }
         applyFilters()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (::offerStore.isInitialized && ::adapter.isInitialized) applyFilters()
     }
 
     private fun setupList() {
@@ -146,7 +158,8 @@ class MercadoFragment : Fragment() {
 
     private fun applyFilters() {
         val amountFilter = binding.etMontoFiltro.text.toString().toDoubleOrNull()
-        val filtered = MarketOfferRepository.offers.filter { offer ->
+        val allOffers = offerStore.getMarketOffersForCurrentUser().map { it.toMarketOffer() }
+        val filtered = allOffers.filter { offer ->
             val activeAndExternal = offer.status == "ACTIVA" && !offer.isOwnOffer
             val operationMatches = offer.operation == selectedOperation
             val currencyMatches = selectedCurrency == "TODAS" ||
@@ -158,6 +171,8 @@ class MercadoFragment : Fragment() {
             val reputationMatches = offer.reputation >= minReputation
 
             activeAndExternal && operationMatches && currencyMatches && paymentMatches && amountMatches && reputationMatches
+        }.let { offers ->
+            if (selectedOperation == "VENTA") offers.sortedBy { it.rate } else offers.sortedByDescending { it.rate }
         }
 
         adapter.updateData(filtered)
@@ -169,6 +184,25 @@ class MercadoFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+}
+
+private fun P2pOffer.toMarketOffer(): MarketOffer {
+    return MarketOffer(
+        id = id,
+        user = ownerName,
+        reputation = 98,
+        orders = 12,
+        operation = type,
+        fromCurrency = fromCurrency,
+        toCurrency = toCurrency,
+        rate = rate,
+        amount = amount,
+        minAmount = minAmount,
+        paymentMethods = paymentMethods,
+        status = status,
+        timeLimitMinutes = 15,
+        isOwnOffer = false
+    )
 }
 
 class MarketOfferAdapter(
@@ -189,7 +223,7 @@ class MarketOfferAdapter(
 
         with(holder.binding) {
             tvUserName.text = item.user
-            tvUserStats.text = "${item.orders} ordenes | ${item.reputation}% exito"
+            tvUserStats.text = "${starsFor(item.reputation)} ${"%.1f".format(item.reputation / 20.0)} | ${item.orders} ordenes | ${item.reputation}% exito"
             tvOperation.text = item.operation
             tvOperation.setTextColor(if (item.operation == "VENTA") Color.parseColor("#C62828") else Color.parseColor("#2E7D32"))
             tvPairValue.text = "${item.fromCurrency} / ${item.toCurrency}"
@@ -207,6 +241,15 @@ class MarketOfferAdapter(
     fun updateData(newItems: List<MarketOffer>) {
         items = newItems
         notifyDataSetChanged()
+    }
+}
+
+private fun starsFor(reputation: Int): String {
+    val rating = (reputation / 20.0).coerceIn(0.0, 5.0)
+    val full = rating.toInt()
+    return buildString {
+        repeat(full) { append("*") }
+        repeat(5 - full) { append("☆") }
     }
 }
 

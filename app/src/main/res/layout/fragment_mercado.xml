@@ -21,6 +21,15 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="#1A1A1A" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnMisOperaciones"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="Mis operaciones"
+            android:textAllCaps="false"
+            android:textColor="#1E88E5" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.tabs.TabLayout

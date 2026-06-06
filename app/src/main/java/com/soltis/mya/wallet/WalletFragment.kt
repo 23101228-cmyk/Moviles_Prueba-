@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -41,6 +40,7 @@ class WalletFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.initialize(requireContext())
 
         viewModel.balances.observe(viewLifecycleOwner) { balances ->
             updateTotalBalanceUI(balances)
@@ -127,9 +127,6 @@ class WalletFragment : Fragment() {
         }
         binding.btnRetirar.setOnClickListener {
             findNavController().navigate(R.id.nav_withdraw)
-        }
-        binding.btnTransferir.setOnClickListener {
-            Toast.makeText(context, "Transferencia simulada pendiente", Toast.LENGTH_SHORT).show()
         }
         binding.layoutMisCuentasHeader.setOnClickListener {
             accountsExpanded = !accountsExpanded
