@@ -10,24 +10,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:gravity="center"
         android:paddingStart="28dp"
         android:paddingEnd="28dp"
-        android:paddingBottom="32dp">
+        android:paddingTop="40dp"
+        android:paddingBottom="40dp">
 
         <!-- Logo -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="32dp"
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
-            <!-- P2P icon placeholder (replace with your actual logo drawable) -->
             <ImageView
                 android:id="@+id/imgLogo"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
                 android:src="@drawable/ic_p2p_logo"
                 android:contentDescription="Logo P2P" />
 
@@ -35,21 +35,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginStart="6dp">
+                android:layout_marginStart="9dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="P2P"
                     android:textStyle="bold"
-                    android:textSize="18sp"
+                    android:textSize="27sp"
                     android:textColor="#1A1A1A" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="DIVISAS"
-                    android:textSize="10sp"
+                    android:textSize="15sp"
                     android:letterSpacing="0.12"
                     android:textColor="#1A1A1A" />
             </LinearLayout>
@@ -60,9 +60,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:text="Crear cuenta"
-            android:textSize="26sp"
+            android:textSize="39sp"
             android:textStyle="bold"
             android:textColor="#1A1A1A" />
 
@@ -71,9 +71,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="9dp"
             android:text="Únete a nuestra plataforma P2P y accede\na la mejor experiencia de compra y venta de divisas."
-            android:textSize="13sp"
+            android:textSize="20sp"
             android:textColor="#666666"
             android:gravity="center" />
 
@@ -81,9 +81,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="42dp"
+            android:layout_gravity="center_horizontal"
             android:text="Nombre completo"
-            android:textSize="14sp"
+            android:textSize="21sp"
             android:textStyle="bold"
             android:textColor="#1A1A1A" />
 
@@ -92,13 +93,13 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            app:boxCornerRadiusBottomEnd="10dp"
-            app:boxCornerRadiusBottomStart="10dp"
-            app:boxCornerRadiusTopEnd="10dp"
-            app:boxCornerRadiusTopStart="10dp"
+            android:layout_marginTop="9dp"
+            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusBottomStart="15dp"
+            app:boxCornerRadiusTopEnd="15dp"
+            app:boxCornerRadiusTopStart="15dp"
             app:boxStrokeColor="#E0E0E0"
-            app:boxStrokeWidthFocused="1.5dp"
+            app:boxStrokeWidthFocused="2dp"
             app:startIconDrawable="@drawable/ic_person"
             app:startIconTint="#BDBDBD">
 
@@ -108,16 +109,18 @@
                 android:layout_height="wrap_content"
                 android:hint="Ingresa tu nombre completo"
                 android:inputType="textPersonName"
-                android:textSize="14sp" />
+                android:textSize="21sp"
+                android:padding="20dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- ── Correo electrónico ── -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_gravity="center_horizontal"
             android:text="Correo electrónico"
-            android:textSize="14sp"
+            android:textSize="21sp"
             android:textStyle="bold"
             android:textColor="#1A1A1A" />
 
@@ -126,13 +129,13 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            app:boxCornerRadiusBottomEnd="10dp"
-            app:boxCornerRadiusBottomStart="10dp"
-            app:boxCornerRadiusTopEnd="10dp"
-            app:boxCornerRadiusTopStart="10dp"
+            android:layout_marginTop="9dp"
+            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusBottomStart="15dp"
+            app:boxCornerRadiusTopEnd="15dp"
+            app:boxCornerRadiusTopStart="15dp"
             app:boxStrokeColor="#E0E0E0"
-            app:boxStrokeWidthFocused="1.5dp"
+            app:boxStrokeWidthFocused="2dp"
             app:startIconDrawable="@drawable/ic_email"
             app:startIconTint="#BDBDBD">
 
@@ -142,16 +145,18 @@
                 android:layout_height="wrap_content"
                 android:hint="Ingresa tu correo electrónico"
                 android:inputType="textEmailAddress"
-                android:textSize="14sp" />
+                android:textSize="21sp"
+                android:padding="20dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- ── Nombre de usuario ── -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_gravity="center_horizontal"
             android:text="Nombre de usuario"
-            android:textSize="14sp"
+            android:textSize="21sp"
             android:textStyle="bold"
             android:textColor="#1A1A1A" />
 
@@ -160,13 +165,13 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            app:boxCornerRadiusBottomEnd="10dp"
-            app:boxCornerRadiusBottomStart="10dp"
-            app:boxCornerRadiusTopEnd="10dp"
-            app:boxCornerRadiusTopStart="10dp"
+            android:layout_marginTop="9dp"
+            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusBottomStart="15dp"
+            app:boxCornerRadiusTopEnd="15dp"
+            app:boxCornerRadiusTopStart="15dp"
             app:boxStrokeColor="#E0E0E0"
-            app:boxStrokeWidthFocused="1.5dp"
+            app:boxStrokeWidthFocused="2dp"
             app:startIconDrawable="@drawable/ic_person"
             app:startIconTint="#BDBDBD">
 
@@ -176,16 +181,18 @@
                 android:layout_height="wrap_content"
                 android:hint="Crea un nombre de usuario"
                 android:inputType="textNoSuggestions"
-                android:textSize="14sp" />
+                android:textSize="21sp"
+                android:padding="20dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- ── Contraseña ── -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_gravity="center_horizontal"
             android:text="Contraseña"
-            android:textSize="14sp"
+            android:textSize="21sp"
             android:textStyle="bold"
             android:textColor="#1A1A1A" />
 
@@ -194,13 +201,13 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            app:boxCornerRadiusBottomEnd="10dp"
-            app:boxCornerRadiusBottomStart="10dp"
-            app:boxCornerRadiusTopEnd="10dp"
-            app:boxCornerRadiusTopStart="10dp"
+            android:layout_marginTop="9dp"
+            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusBottomStart="15dp"
+            app:boxCornerRadiusTopEnd="15dp"
+            app:boxCornerRadiusTopStart="15dp"
             app:boxStrokeColor="#E0E0E0"
-            app:boxStrokeWidthFocused="1.5dp"
+            app:boxStrokeWidthFocused="2dp"
             app:startIconDrawable="@drawable/ic_lock"
             app:startIconTint="#BDBDBD"
             app:endIconMode="password_toggle">
@@ -211,16 +218,18 @@
                 android:layout_height="wrap_content"
                 android:hint="Crea una contraseña segura"
                 android:inputType="textPassword"
-                android:textSize="14sp" />
+                android:textSize="21sp"
+                android:padding="20dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- ── Confirmar contraseña ── -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_gravity="center_horizontal"
             android:text="Confirmar contraseña"
-            android:textSize="14sp"
+            android:textSize="21sp"
             android:textStyle="bold"
             android:textColor="#1A1A1A" />
 
@@ -229,13 +238,13 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            app:boxCornerRadiusBottomEnd="10dp"
-            app:boxCornerRadiusBottomStart="10dp"
-            app:boxCornerRadiusTopEnd="10dp"
-            app:boxCornerRadiusTopStart="10dp"
+            android:layout_marginTop="9dp"
+            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusBottomStart="15dp"
+            app:boxCornerRadiusTopEnd="15dp"
+            app:boxCornerRadiusTopStart="15dp"
             app:boxStrokeColor="#E0E0E0"
-            app:boxStrokeWidthFocused="1.5dp"
+            app:boxStrokeWidthFocused="2dp"
             app:startIconDrawable="@drawable/ic_lock"
             app:startIconTint="#BDBDBD"
             app:endIconMode="password_toggle">
@@ -246,92 +255,96 @@
                 android:layout_height="wrap_content"
                 android:hint="Confirma tu contraseña"
                 android:inputType="textPassword"
-                android:textSize="14sp" />
+                android:textSize="21sp"
+                android:padding="20dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- ── Términos y condiciones ── -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp"
-            android:gravity="center_vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="30dp"
+            android:gravity="center">
 
             <CheckBox
                 android:id="@+id/cbTerminos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:buttonTint="#F5A623"
-                android:layout_marginEnd="4dp" />
-
-            <TextView
-                android:id="@+id/tvTerminos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Acepto los "
-                android:textSize="13sp"
+                android:text="Acepto los términos y condiciones"
+                android:textSize="18sp"
                 android:textColor="#444444" />
 
-            <TextView
-                android:id="@+id/tvLinkTerminos"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Términos y Condiciones"
-                android:textSize="13sp"
-                android:textColor="#F5A623"
-                android:textStyle="bold" />
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" y la "
-                android:textSize="13sp"
-                android:textColor="#444444" />
+                <TextView
+                    android:id="@+id/tvLinkTerminos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Términos"
+                    android:textSize="18sp"
+                    android:textColor="#F5A623"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tvLinkPrivacidad"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Política de Privacidad"
-                android:textSize="13sp"
-                android:textColor="#F5A623"
-                android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" y "
+                    android:textSize="18sp"
+                    android:textColor="#444444" />
+
+                <TextView
+                    android:id="@+id/tvLinkPrivacidad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Privacidad"
+                    android:textSize="18sp"
+                    android:textColor="#F5A623"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </LinearLayout>
 
         <!-- ── Botón Registrarme ── -->
         <Button
             android:id="@+id/btnRegistrar"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="24dp"
+            android:layout_height="84dp"
+            android:layout_marginTop="36dp"
             android:text="Registrarme"
-            android:textSize="16sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="#FFFFFF"
             android:backgroundTint="#F5A623"
-            app:cornerRadius="12dp" />
+            app:cornerRadius="18dp" />
 
         <!-- ── ¿Ya tienes cuenta? ── -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="24dp"
+            android:orientation="vertical"
+            android:gravity="center">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="¿Ya tienes cuenta? "
-                android:textSize="13sp"
+                android:textSize="20sp"
                 android:textColor="#666666" />
 
             <TextView
                 android:id="@+id/tvIniciarSesion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:text="Inicia sesión"
-                android:textSize="13sp"
+                android:textSize="20sp"
                 android:textColor="#F5A623"
                 android:textStyle="bold" />
         </LinearLayout>
