@@ -1,8 +1,6 @@
 package com.soltis.mya.perfil
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.InputType
@@ -21,15 +19,18 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.google.android.material.card.MaterialCardView
 import com.soltis.mya.R
+import com.soltis.mya.data.BankCard
+import com.soltis.mya.data.LocalUserStore
+import com.soltis.mya.data.UserProfile
 import com.soltis.mya.databinding.FragmentPerfilBinding
 import com.soltis.mya.login.LoginActivity
-import org.json.JSONArray
-import org.json.JSONObject
 
 class PerfilFragment : Fragment() {
     private var _binding: FragmentPerfilBinding? = null
     private val binding get() = _binding!!
-    private lateinit var prefs: SharedPreferences
+    private lateinit var userStore: LocalUserStore
+    private var currentUser: UserProfile? = null
+    private var isEditingProfile = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentPerfilBinding.inflate(inflater, container, false)
@@ -38,64 +39,110 @@ class PerfilFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        prefs = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        userStore = LocalUserStore(requireContext())
         loadProfile()
         setupProfileActions()
     }
 
     private fun setupProfileActions() {
-        binding.btnEditProfile.setOnClickListener { showEditProfileDialog() }
-        binding.cardYape.setOnClickListener { showEditProfileDialog() }
-        binding.cardPlin.setOnClickListener { showEditProfileDialog() }
+        binding.btnEditProfile.setOnClickListener {
+            if (isEditingProfile) saveInlineProfile() else setProfileEditMode(true)
+        }
+        binding.cardYape.setOnClickListener { setProfileEditMode(true) }
+        binding.cardPlin.setOnClickListener { setProfileEditMode(true) }
         binding.btnAddPaymentCard.setOnClickListener { showAddBankCardDialog() }
-        binding.cardValidation.setOnClickListener { showMessage("Tus datos de pago están validados") }
+        binding.cardValidation.setOnClickListener { showMessage("Tus datos de pago estan validados") }
         binding.btnSaveProfile.setOnClickListener {
-            saveCurrentProfile()
-            showMessage("Perfil guardado correctamente")
+            if (isEditingProfile) {
+                setProfileEditMode(false)
+            } else {
+                setProfileEditMode(true)
+            }
         }
         binding.btnLogout.setOnClickListener { logoutToLogin() }
     }
 
     private fun loadProfile() {
-        val name = prefs.getString(KEY_NAME, DEFAULT_NAME) ?: DEFAULT_NAME
-        val email = prefs.getString(KEY_EMAIL, DEFAULT_EMAIL) ?: DEFAULT_EMAIL
-        val phone = prefs.getString(KEY_PHONE, DEFAULT_PHONE) ?: DEFAULT_PHONE
-        val yape = prefs.getString(KEY_YAPE, phone) ?: phone
-        val plin = prefs.getString(KEY_PLIN, phone) ?: phone
+        val user = userStore.getCurrentUser()
+        if (user == null) {
+            logoutToLogin()
+            return
+        }
 
-        binding.tvProfileName.text = name
-        binding.tvProfileEmail.text = email
-        binding.tvFullName.text = name
-        binding.tvPhone.text = phone
-        binding.tvYapeValue.text = yape
-        binding.tvPlinValue.text = plin
-        renderPaymentCards()
+        currentUser = user
+        binding.tvProfileName.text = user.username.ifBlank { "Usuario P2P" }
+        binding.tvProfileEmail.text = user.email
+        binding.tvFullName.text = user.fullName.ifBlank { "Pendiente" }
+        binding.tvPhone.text = user.phone.ifBlank { "Pendiente" }
+        binding.tvYapeValue.text = user.yape.ifBlank { "Pendiente" }
+        binding.tvPlinValue.text = user.plin.ifBlank { "Pendiente" }
+        renderPaymentCards(user.bankCards)
+        if (isEditingProfile) fillInlineInputs(user)
     }
 
-    private fun saveCurrentProfile() {
-        prefs.edit()
-            .putString(KEY_NAME, binding.tvFullName.text.toString())
-            .putString(KEY_EMAIL, binding.tvProfileEmail.text.toString())
-            .putString(KEY_PHONE, binding.tvPhone.text.toString())
-            .putString(KEY_YAPE, binding.tvYapeValue.text.toString())
-            .putString(KEY_PLIN, binding.tvPlinValue.text.toString())
-            .apply()
+    private fun setProfileEditMode(enabled: Boolean) {
+        val user = currentUser ?: return
+        isEditingProfile = enabled
+        if (enabled) fillInlineInputs(user)
+
+        val readVisibility = if (enabled) View.GONE else View.VISIBLE
+        val editVisibility = if (enabled) View.VISIBLE else View.GONE
+
+        binding.tvFullName.visibility = readVisibility
+        binding.tvPhone.visibility = readVisibility
+        binding.tvYapeValue.visibility = readVisibility
+        binding.tvPlinValue.visibility = readVisibility
+
+        binding.etFullNameInline.visibility = editVisibility
+        binding.etPhoneInline.visibility = editVisibility
+        binding.etYapeInline.visibility = editVisibility
+        binding.etPlinInline.visibility = editVisibility
+
+        binding.btnEditProfile.text = if (enabled) "Guardar" else "Editar"
+        binding.btnSaveProfile.text = if (enabled) "Cancelar edicion" else "Editar datos"
+    }
+
+    private fun fillInlineInputs(user: UserProfile) {
+        binding.etFullNameInline.setText(user.fullName)
+        binding.etPhoneInline.setText(user.phone)
+        binding.etYapeInline.setText(user.yape)
+        binding.etPlinInline.setText(user.plin)
+    }
+
+    private fun saveInlineProfile() {
+        val user = currentUser ?: return
+        val name = binding.etFullNameInline.text.toString().trim()
+        if (name.isBlank()) {
+            binding.etFullNameInline.error = "Completa el nombre legal"
+            return
+        }
+
+        val updated = user.copy(
+            fullName = name,
+            phone = binding.etPhoneInline.text.toString().trim(),
+            yape = binding.etYapeInline.text.toString().trim(),
+            plin = binding.etPlinInline.text.toString().trim()
+        )
+        userStore.updateCurrentUser(updated)
+        loadProfile()
+        setProfileEditMode(false)
+        showMessage("Perfil actualizado")
     }
 
     private fun showEditProfileDialog() {
+        val user = currentUser ?: return
         val container = LinearLayout(requireContext()).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(dp(18), dp(8), dp(18), 0)
         }
 
-        val nameInput = createInput("Nombre completo", binding.tvFullName.text.toString(), InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_WORDS)
-        val emailInput = createInput("Correo", binding.tvProfileEmail.text.toString(), InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
-        val phoneInput = createInput("Celular", binding.tvPhone.text.toString(), InputType.TYPE_CLASS_PHONE)
-        val yapeInput = createInput("Yape", binding.tvYapeValue.text.toString(), InputType.TYPE_CLASS_PHONE)
-        val plinInput = createInput("Plin", binding.tvPlinValue.text.toString(), InputType.TYPE_CLASS_PHONE)
+        val nameInput = createInput("Nombre legal", user.fullName, InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_WORDS)
+        val phoneInput = createInput("Telefono", user.phone, InputType.TYPE_CLASS_PHONE)
+        val yapeInput = createInput("Yape", user.yape, InputType.TYPE_CLASS_PHONE)
+        val plinInput = createInput("Plin", user.plin, InputType.TYPE_CLASS_PHONE)
 
         container.addView(nameInput)
-        container.addView(emailInput)
+        container.addView(createReadOnlyText("Correo: ${user.email}"))
         container.addView(phoneInput)
         container.addView(yapeInput)
         container.addView(plinInput)
@@ -109,19 +156,18 @@ class PerfilFragment : Fragment() {
             .apply {
                 setOnShowListener {
                     getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-                        if (nameInput.text.isNullOrBlank() || emailInput.text.isNullOrBlank() || phoneInput.text.isNullOrBlank()) {
-                            showMessage("Completa nombre, correo y celular")
+                        if (nameInput.text.isNullOrBlank()) {
+                            showMessage("Completa el nombre legal")
                             return@setOnClickListener
                         }
 
-                        prefs.edit()
-                            .putString(KEY_NAME, nameInput.text.toString().trim())
-                            .putString(KEY_EMAIL, emailInput.text.toString().trim())
-                            .putString(KEY_PHONE, phoneInput.text.toString().trim())
-                            .putString(KEY_YAPE, yapeInput.text.toString().trim())
-                            .putString(KEY_PLIN, plinInput.text.toString().trim())
-                            .apply()
-
+                        val updated = user.copy(
+                            fullName = nameInput.text.toString().trim(),
+                            phone = phoneInput.text.toString().trim(),
+                            yape = yapeInput.text.toString().trim(),
+                            plin = plinInput.text.toString().trim()
+                        )
+                        userStore.updateCurrentUser(updated)
                         loadProfile()
                         showMessage("Cambios guardados")
                         dismiss()
@@ -132,15 +178,16 @@ class PerfilFragment : Fragment() {
     }
 
     private fun showAddBankCardDialog() {
+        val user = currentUser ?: return
         val container = LinearLayout(requireContext()).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(dp(18), dp(8), dp(18), 0)
         }
 
-        val bankSpinner = createSpinner(listOf("BCP", "BBVA", "Interbank", "Scotiabank", "Banco de la Nación", "BanBif", "Pichincha"))
-        val typeSpinner = createSpinner(listOf("Cuenta de ahorros", "Cuenta corriente"))
-        val accountInput = createInput("Número de cuenta", "", InputType.TYPE_CLASS_NUMBER)
-        val cciInput = createInput("CCI de 20 dígitos", "", InputType.TYPE_CLASS_NUMBER)
+        val bankSpinner = createSpinner(BANK_OPTIONS)
+        val typeSpinner = createSpinner(ACCOUNT_TYPE_OPTIONS)
+        val accountInput = createInput("Numero de cuenta", "", InputType.TYPE_CLASS_NUMBER)
+        val cciInput = createInput("CCI de 20 digitos", "", InputType.TYPE_CLASS_NUMBER)
 
         container.addView(createLabel("Banco"))
         container.addView(bankSpinner)
@@ -164,31 +211,31 @@ class PerfilFragment : Fragment() {
                         val accountLengths = validAccountLengths(bank)
 
                         if (!accountLengths.isEmpty() && account.length !in accountLengths) {
-                            showMessage("La cuenta de $bank debe tener ${formatLengths(accountLengths)} dígitos")
+                            showMessage("La cuenta de $bank debe tener ${formatLengths(accountLengths)} digitos")
                             return@setOnClickListener
                         }
 
                         if (accountLengths.isEmpty() && account.length !in 8..20) {
-                            showMessage("La cuenta debe tener entre 8 y 20 dígitos")
+                            showMessage("La cuenta debe tener entre 8 y 20 digitos")
                             return@setOnClickListener
                         }
 
                         if (cci.length != CCI_LENGTH) {
-                            showMessage("El CCI debe tener 20 dígitos")
+                            showMessage("El CCI debe tener 20 digitos")
                             return@setOnClickListener
                         }
 
-                        val cards = getStoredCards()
-                        cards.put(
-                            JSONObject()
-                                .put("bank", bank)
-                                .put("type", typeSpinner.selectedItem.toString())
-                                .put("account", account)
-                                .put("cci", cci)
+                        val updated = user.copy(
+                            bankCards = user.bankCards + BankCard(
+                                bank = bank,
+                                type = typeSpinner.selectedItem.toString(),
+                                account = account,
+                                cci = cci
+                            )
                         )
-                        prefs.edit().putString(KEY_BANK_CARDS, cards.toString()).apply()
-                        renderPaymentCards()
-                        showMessage("Nueva tarjeta agregada")
+                        userStore.updateCurrentUser(updated)
+                        loadProfile()
+                        showMessage("Nueva cuenta agregada")
                         dismiss()
                     }
                 }
@@ -196,37 +243,38 @@ class PerfilFragment : Fragment() {
             }
     }
 
-    private fun renderPaymentCards() {
+    private fun renderPaymentCards(cards: List<BankCard>) {
         binding.paymentCardsContainer.removeAllViews()
-        val cards = getStoredCards()
 
-        if (cards.length() == 0) {
-            cards.put(
-                JSONObject()
-                    .put("bank", "BCP")
-                    .put("type", "Cuenta de ahorros")
-                    .put("account", "19112345678901")
-                    .put("cci", "00219100123456789012")
-            )
+        if (cards.isEmpty()) {
+            binding.paymentCardsContainer.addView(createPendingCard())
+            binding.tvValidationTitle.text = "Datos de pago pendientes"
+            binding.tvValidationDescription.text = "Agrega Yape, Plin o una cuenta bancaria para operar."
+            return
         }
 
-        for (index in 0 until cards.length()) {
-            val card = cards.getJSONObject(index)
-            binding.paymentCardsContainer.addView(
-                createBankCardView(
-                    bank = card.optString("bank"),
-                    type = card.optString("type"),
-                    account = card.optString("account"),
-                    cci = card.optString("cci")
-                )
-            )
+        cards.forEachIndexed { index, card ->
+            binding.paymentCardsContainer.addView(createBankCardView(index, card))
         }
 
-        val totalMethods = cards.length() + 2
-        binding.tvValidationDescription.text = "$totalMethods medios de pago validados y listos para operar."
+        val user = currentUser
+        val yapeCount = if (user?.yape.isNullOrBlank()) 0 else 1
+        val plinCount = if (user?.plin.isNullOrBlank()) 0 else 1
+        val totalMethods = cards.size + yapeCount + plinCount
+        binding.tvValidationTitle.text = "Datos de pago validados"
+        binding.tvValidationDescription.text = "$totalMethods medios de pago listos para operar."
     }
 
-    private fun createBankCardView(bank: String, type: String, account: String, cci: String): View {
+    private fun createPendingCard(): View {
+        return TextView(requireContext()).apply {
+            text = "Transferencia bancaria: Pendiente"
+            setTextColor(0xFF757575.toInt())
+            textSize = 14f
+            setPadding(dp(16), dp(16), dp(16), dp(16))
+        }
+    }
+
+    private fun createBankCardView(index: Int, cardData: BankCard): View {
         val card = MaterialCardView(requireContext()).apply {
             radius = dp(16).toFloat()
             cardElevation = dp(2).toFloat()
@@ -260,70 +308,111 @@ class PerfilFragment : Fragment() {
         }
 
         val title = TextView(requireContext()).apply {
-            text = bank
+            text = cardData.bank
             setTextColor(0xFF263238.toInt())
             textSize = 16f
             setTypeface(typeface, Typeface.BOLD)
         }
 
         val subtitle = TextView(requireContext()).apply {
-            text = "$type\nCuenta: ${maskNumber(account)}\nCCI: ${maskNumber(cci)}"
+            text = "${cardData.type}\nCuenta: ${userStore.maskAccount(cardData.account)}\nCCI: ${userStore.maskCci(cardData.cci)}"
             setTextColor(0xFF6D6D6D.toInt())
             textSize = 13f
+        }
+
+        val editIcon = ImageView(requireContext()).apply {
+            setImageResource(R.drawable.ic_edit)
+            contentDescription = "Editar cuenta bancaria"
+            layoutParams = LinearLayout.LayoutParams(dp(28), dp(28)).apply {
+                marginStart = dp(12)
+            }
+            setPadding(dp(4), dp(4), dp(4), dp(4))
+            isClickable = true
+            isFocusable = true
+            setOnClickListener { showEditBankCardDialog(index, cardData) }
         }
 
         texts.addView(title)
         texts.addView(subtitle)
         row.addView(icon)
         row.addView(texts)
+        row.addView(editIcon)
         card.addView(row)
-        card.setOnClickListener { showBankCardDetails(bank, type, account, cci) }
+        card.setOnClickListener { showEditBankCardDialog(index, cardData) }
         return card
     }
 
-    private fun getStoredCards(): JSONArray {
-        val saved = prefs.getString(KEY_BANK_CARDS, null)
-        return if (saved.isNullOrBlank()) JSONArray() else JSONArray(saved)
-    }
+    private fun showEditBankCardDialog(index: Int, card: BankCard) {
+        val user = currentUser ?: return
+        val container = LinearLayout(requireContext()).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(dp(18), dp(8), dp(18), 0)
+        }
 
-    private fun showBankCardDetails(bank: String, type: String, account: String, cci: String) {
+        val bankSpinner = createSpinner(BANK_OPTIONS).apply {
+            setSelection(BANK_OPTIONS.indexOf(card.bank).coerceAtLeast(0))
+        }
+        val typeSpinner = createSpinner(ACCOUNT_TYPE_OPTIONS).apply {
+            setSelection(ACCOUNT_TYPE_OPTIONS.indexOf(card.type).coerceAtLeast(0))
+        }
+        val accountInput = createInput("Numero de cuenta", card.account, InputType.TYPE_CLASS_NUMBER)
+        val cciInput = createInput("CCI de 20 digitos", card.cci, InputType.TYPE_CLASS_NUMBER)
+
+        container.addView(createLabel("Banco"))
+        container.addView(bankSpinner)
+        container.addView(createLabel("Tipo"))
+        container.addView(typeSpinner)
+        container.addView(accountInput)
+        container.addView(cciInput)
+
         AlertDialog.Builder(requireContext())
-            .setTitle(bank)
-            .setMessage("$type\n\nNúmero de cuenta:\n$account\n\nCCI:\n$cci")
-            .setPositiveButton("Cerrar", null)
-            .show()
-    }
+            .setTitle("Editar cuenta bancaria")
+            .setView(container)
+            .setNegativeButton("Eliminar") { _, _ ->
+                val updatedCards = user.bankCards.toMutableList().apply {
+                    if (index in indices) removeAt(index)
+                }
+                userStore.updateCurrentUser(user.copy(bankCards = updatedCards))
+                loadProfile()
+                showMessage("Cuenta eliminada")
+            }
+            .setNeutralButton("Cancelar", null)
+            .setPositiveButton("Guardar", null)
+            .create()
+            .apply {
+                setOnShowListener {
+                    getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                        val bank = bankSpinner.selectedItem.toString()
+                        val account = accountInput.text.toString().onlyDigits()
+                        val cci = cciInput.text.toString().onlyDigits()
+                        val accountLengths = validAccountLengths(bank)
 
-    private fun maskNumber(value: String): String {
-        val digits = value.onlyDigits()
-        if (digits.length <= 8) return digits
-        return "${digits.take(4)}••••••${digits.takeLast(4)}"
-    }
+                        if (!isBankCardValid(bank, account, cci, accountLengths)) {
+                            return@setOnClickListener
+                        }
 
-    private fun String.onlyDigits(): String = filter { it.isDigit() }
-
-    private fun validAccountLengths(bank: String): IntRange {
-        return when (bank) {
-            "BCP" -> 13..14
-            "BBVA" -> 18..18
-            "Interbank" -> 13..13
-            "Scotiabank" -> 10..10
-            "Banco de la Nación" -> 11..11
-            "BanBif" -> 12..12
-            "Pichincha" -> 10..10
-            else -> 0..-1
-        }
-    }
-
-    private fun formatLengths(lengths: IntRange): String {
-        return if (lengths.first == lengths.last) {
-            lengths.first.toString()
-        } else {
-            "${lengths.first} o ${lengths.last}"
-        }
+                        val updatedCards = user.bankCards.toMutableList().apply {
+                            if (index in indices) {
+                                this[index] = BankCard(
+                                    bank = bank,
+                                    type = typeSpinner.selectedItem.toString(),
+                                    account = account,
+                                    cci = cci
+                                )
+                            }
+                        }
+                        userStore.updateCurrentUser(user.copy(bankCards = updatedCards))
+                        loadProfile()
+                        showMessage("Cuenta actualizada")
+                        dismiss()
+                    }
+                }
+                show()
+            }
     }
 
     private fun logoutToLogin() {
+        userStore.logout()
         val intent = Intent(requireContext(), LoginActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
@@ -341,6 +430,15 @@ class PerfilFragment : Fragment() {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             ).apply { bottomMargin = dp(10) }
+        }
+    }
+
+    private fun createReadOnlyText(value: String): TextView {
+        return TextView(requireContext()).apply {
+            text = value
+            setTextColor(0xFF757575.toInt())
+            textSize = 13f
+            setPadding(0, 0, 0, dp(10))
         }
     }
 
@@ -363,6 +461,48 @@ class PerfilFragment : Fragment() {
         }
     }
 
+    private fun String.onlyDigits(): String = filter { it.isDigit() }
+
+    private fun validAccountLengths(bank: String): IntRange {
+        return when (bank) {
+            "BCP" -> 13..14
+            "BBVA" -> 18..18
+            "Interbank" -> 13..13
+            "Scotiabank" -> 10..10
+            "Banco de la Nacion" -> 11..11
+            "BanBif" -> 12..12
+            "Pichincha" -> 10..10
+            else -> 0..-1
+        }
+    }
+
+    private fun isBankCardValid(bank: String, account: String, cci: String, accountLengths: IntRange): Boolean {
+        if (!accountLengths.isEmpty() && account.length !in accountLengths) {
+            showMessage("La cuenta de $bank debe tener ${formatLengths(accountLengths)} digitos")
+            return false
+        }
+
+        if (accountLengths.isEmpty() && account.length !in 8..20) {
+            showMessage("La cuenta debe tener entre 8 y 20 digitos")
+            return false
+        }
+
+        if (cci.length != CCI_LENGTH) {
+            showMessage("El CCI debe tener 20 digitos")
+            return false
+        }
+
+        return true
+    }
+
+    private fun formatLengths(lengths: IntRange): String {
+        return if (lengths.first == lengths.last) {
+            lengths.first.toString()
+        } else {
+            "${lengths.first} o ${lengths.last}"
+        }
+    }
+
     private fun dp(value: Int): Int = (value * resources.displayMetrics.density).toInt()
 
     private fun showMessage(message: String) {
@@ -375,16 +515,8 @@ class PerfilFragment : Fragment() {
     }
 
     companion object {
-        private const val PREFS_NAME = "perfil_usuario"
-        private const val KEY_NAME = "name"
-        private const val KEY_EMAIL = "email"
-        private const val KEY_PHONE = "phone"
-        private const val KEY_YAPE = "yape"
-        private const val KEY_PLIN = "plin"
-        private const val KEY_BANK_CARDS = "bank_cards"
         private const val CCI_LENGTH = 20
-        private const val DEFAULT_NAME = "Usuario de prueba"
-        private const val DEFAULT_EMAIL = "usuario@ejemplo.com"
-        private const val DEFAULT_PHONE = "+51 999 888 777"
+        private val BANK_OPTIONS = listOf("BCP", "BBVA", "Interbank", "Scotiabank", "Banco de la Nacion", "BanBif", "Pichincha")
+        private val ACCOUNT_TYPE_OPTIONS = listOf("Cuenta de ahorros", "Cuenta corriente")
     }
 }

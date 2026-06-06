@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_nav_mercado_to_offer_detail"
             app:destination="@id/nav_offer_detail" />
+        <action
+            android:id="@+id/action_nav_mercado_to_operations"
+            app:destination="@id/nav_operations" />
     </fragment>
 
     <fragment
@@ -24,6 +27,12 @@
         android:name="com.soltis.mya.mercado.OfferDetailFragment"
         android:label="Detalle de oferta"
         tools:layout="@layout/fragment_offer_detail" />
+
+    <fragment
+        android:id="@+id/nav_operations"
+        android:name="com.soltis.mya.mercado.OperationsFragment"
+        android:label="Mis operaciones"
+        tools:layout="@layout/fragment_operations" />
 
     <fragment
         android:id="@+id/nav_ofertas"

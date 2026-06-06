@@ -147,6 +147,19 @@
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
+                <EditText
+                    android:id="@+id/etFullNameInline"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="4dp"
+                    android:backgroundTint="#F5A623"
+                    android:hint="Nombre legal"
+                    android:inputType="textPersonName"
+                    android:singleLine="true"
+                    android:textColor="#1A1A1A"
+                    android:textSize="16sp"
+                    android:visibility="gone" />
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -169,6 +182,19 @@
                     android:textColor="#1A1A1A"
                     android:textSize="16sp"
                     android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/etPhoneInline"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="4dp"
+                    android:backgroundTint="#F5A623"
+                    android:hint="Telefono"
+                    android:inputType="phone"
+                    android:singleLine="true"
+                    android:textColor="#1A1A1A"
+                    android:textSize="16sp"
+                    android:visibility="gone" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -231,6 +257,20 @@
                         android:text="+51 999 888 777"
                         android:textColor="#4A148C"
                         android:textSize="12sp" />
+
+                    <EditText
+                        android:id="@+id/etYapeInline"
+                        android:layout_width="match_parent"
+                        android:layout_height="42dp"
+                        android:layout_marginTop="4dp"
+                        android:backgroundTint="#6A1B9A"
+                        android:gravity="center"
+                        android:hint="Yape"
+                        android:inputType="phone"
+                        android:singleLine="true"
+                        android:textColor="#4A148C"
+                        android:textSize="12sp"
+                        android:visibility="gone" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -278,6 +318,20 @@
                         android:text="+51 999 888 777"
                         android:textColor="#006064"
                         android:textSize="12sp" />
+
+                    <EditText
+                        android:id="@+id/etPlinInline"
+                        android:layout_width="match_parent"
+                        android:layout_height="42dp"
+                        android:layout_marginTop="4dp"
+                        android:backgroundTint="#00796B"
+                        android:gravity="center"
+                        android:hint="Plin"
+                        android:inputType="phone"
+                        android:singleLine="true"
+                        android:textColor="#006064"
+                        android:textSize="12sp"
+                        android:visibility="gone" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>

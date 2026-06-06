@@ -164,5 +164,15 @@
             android:text="Iniciar transaccion"
             android:textAllCaps="false"
             app:cornerRadius="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCancelBeforeStart"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Cancelar y volver al mercado"
+            android:textAllCaps="false"
+            app:cornerRadius="8dp" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
