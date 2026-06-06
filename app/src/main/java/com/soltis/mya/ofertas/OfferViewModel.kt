@@ -9,8 +9,8 @@ class OfferViewModel : ViewModel() {
     val myOffers: LiveData<MutableList<MyOffer>> = _myOffers
 
     fun addOffer(offer: MyOffer) {
-        val currentList = _myOffers.value ?: mutableListOf()
-        currentList.add(0, offer) // Add to the beginning of the list
+        val currentList = _myOffers.value?.toMutableList() ?: mutableListOf()
+        currentList.add(0, offer)
         _myOffers.value = currentList
     }
 }

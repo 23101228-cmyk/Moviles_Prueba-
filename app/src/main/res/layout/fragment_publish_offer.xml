@@ -215,6 +215,7 @@
                 </LinearLayout>
 
                 <ImageView
+                    android:id="@+id/imgCurrencyFromDropdown"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:src="@drawable/ic_arrow_drop_down"
@@ -277,6 +278,7 @@
                 </LinearLayout>
 
                 <ImageView
+                    android:id="@+id/imgCurrencyToDropdown"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:src="@drawable/ic_arrow_drop_down"
@@ -367,8 +369,8 @@
                 android:layout_height="wrap_content"
                 android:hint="Tipo de cambio"
                 android:inputType="numberDecimal"
-                android:focusable="false"
-                android:clickable="false"
+                android:focusable="true"
+                android:clickable="true"
                 android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
